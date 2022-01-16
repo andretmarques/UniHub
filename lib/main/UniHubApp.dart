@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:unihub/taskpages/homepage/HomePage.dart';
+import 'package:unihub/landingpage/LandingPage.dart';
 
 class UniHubApp extends StatelessWidget {
   const UniHubApp({Key? key}) : super(key: key);
+
+  // TODO get username
+  static const username = "username";
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,10 @@ class UniHubApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      initialRoute: '/LandingPage',
+      routes: {
+        '/LandingPage': (context) => const LandingPage(username: username)
+      },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
