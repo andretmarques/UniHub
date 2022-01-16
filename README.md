@@ -2,6 +2,8 @@
 
 A new way of paying University fees.
 
+![image](https://user-images.githubusercontent.com/55790466/149672372-7358d242-b798-4273-bb92-22bb499f49a6.png)
+
 ## Getting Started
 
 
@@ -24,4 +26,10 @@ A new way of paying University fees.
 
     After finishing step 2, claim your reward. This consists of tokens and may vary depending on the task.
 
-    Enjoy!
+  
+  
+  ### Enjoy!
+
+
+![image](https://user-images.githubusercontent.com/55790466/149672413-f3990581-2844-428a-844e-146aba7923fe.png)
+
