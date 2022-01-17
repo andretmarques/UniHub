@@ -22,7 +22,6 @@ class _LandingWelcomePageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           halfLogoUtils.loadHalfLogo(),
