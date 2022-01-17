@@ -1,4 +1,3 @@
-import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/utils/LandingPageUtils.dart';
@@ -26,7 +25,7 @@ class _LandingWelcomePageState extends State<LandingPage> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          halfLogoUtils.loadHalfLogo(Constants.HALF_LOGO_POSITIONS.LEFT),
+          halfLogoUtils.loadHalfLogo(),
           landingPageUtils.createWelcomeCircle(context),
           landingPageUtils.createWelcomeString(username),
         ],
