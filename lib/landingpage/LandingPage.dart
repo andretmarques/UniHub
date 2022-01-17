@@ -26,8 +26,14 @@ class _LandingWelcomePageState extends State<LandingPage> {
       body: Stack(
         children: [
           halfLogoUtils.loadHalfLogo(),
-          landingPageUtils.createWelcomeCircle(context),
-          landingPageUtils.createWelcomeString(username),
+          Align(
+            child: landingPageUtils.createWelcomeCircle(context),
+            alignment: Alignment.center,
+          ),
+          Align(
+            child: landingPageUtils.createWelcomeString(username),
+            alignment: Alignment.center,
+          ),
         ],
       ),
     );
