@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/taskpages/homepage/HomePage.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 
@@ -11,7 +13,7 @@ class UniHubApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'UniHub',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,7 +28,8 @@ class UniHubApp extends StatelessWidget {
       ),
       initialRoute: '/LandingPage',
       routes: {
-        '/LandingPage': (context) => const LandingPage(username: username)
+        '/LandingPage': (context) => const LandingPage(username: username),
+        '/LoginPage': (context) => const LoginPage()
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
