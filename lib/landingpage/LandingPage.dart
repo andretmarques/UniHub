@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unihub/constants/ImageConstants.dart' as ImageConstants;
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key , required this.username}) : super(key: key);
@@ -22,7 +23,7 @@ class _LandingWelcomePageState extends State<LandingPage> {
         children: [
           Scaffold(
               body: Center(
-                child: Image.asset('assets/images/half_logo.png', scale: 1.5),
+                child: Image.asset(ImageConstants.HALF_LOGO, scale: 1.5),
                 heightFactor: 1.7,
       )
           ),
