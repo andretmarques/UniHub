@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unihub/Utils/Utils.dart';
+import 'package:unihub/utils/Utils.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
 class RegisterPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   static const utils = Utils();
-  final GlobalKey<FormState> _testForm = GlobalKey<FormState>();
+  final GlobalKey<FormBuilderState> _testForm = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +37,17 @@ class _RegisterPageState extends State<RegisterPage> {
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              Form(
+              FormBuilder(
                 //TODO perguntar qual preferem key ou auto
                 //autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: _testForm,
                   child: Column(
                       children: [
-                        utils.buildInput(InputType.User),
-                        utils.buildInput(InputType.Email),
-                        utils.buildInput(InputType.Password),
-                        utils.buildInput(InputType.ConfirmPassword),
-                        utils.buildInput(InputType.CC),
+                        utils.buildInput(FormInputType.User),
+                        utils.buildInput(FormInputType.Email),
+                        utils.buildInput(FormInputType.Password),
+                        utils.buildInput(FormInputType.ConfirmPassword),
+                        utils.buildInput(FormInputType.CC),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
                         utils.buildButton("CREATE ACCOUNT", _testForm),
                   ])

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:unihub/registerpage/RegisterPage.dart';
@@ -8,48 +9,55 @@ import 'dart:developer';
 class Utils extends StatelessWidget {
   const Utils({Key? key}) : super(key: key);
 
-  Widget buildInput(InputType type) {
+  Widget buildInput(FormInputType type) {
     Icon icon;
     String textLabel;
+    String name;
     bool obscure;
     var validate;
 
     switch (type) {
-      case InputType.Password:
+      case FormInputType.Password:
         icon = const Icon(Icons.lock);
         textLabel = "Password";
         obscure = true;
         validate = validateDefault;
+        name = "pass";
         break;
-      case InputType.Email:
+      case FormInputType.Email:
         icon = const Icon(Icons.email);
         textLabel = "Email";
         obscure = false;
         validate = validateEmail;
+        name = "email";
         break;
-      case InputType.User:
+      case FormInputType.User:
         icon = const Icon(Icons.person);
         textLabel = "User";
         obscure = false;
         validate = validateDefault;
+        name = "user";
         break;
-      case InputType.ConfirmPassword:
+      case FormInputType.ConfirmPassword:
         icon = const Icon(Icons.lock);
         textLabel = "Confirm Password";
         obscure = true;
         validate = validateDefault;
+        name = "pass2";
         break;
-      case InputType.CC:
+      case FormInputType.CC:
         icon = const Icon(Icons.credit_card);
         textLabel = "Identification";
         obscure = false;
         validate = validateCC;
+        name = "cc";
         break;
     }
     return Container(
         width: 350,
         padding: const EdgeInsets.only(top: 20.0),
-        child: TextFormField(
+        child: FormBuilderTextField(
+          name: name,
           autocorrect: true,
           obscureText: obscure,
           validator: (value) {
@@ -73,7 +81,7 @@ class Utils extends StatelessWidget {
     );
   }
 
-  Widget buildButton(String text, GlobalKey<FormState> key) {
+  Widget buildButton(String text, GlobalKey<FormBuilderState> key) {
     final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: const Size(275, 56), primary: Constants.PRIMARY_COLOR);
 
     return Center (
@@ -81,12 +89,22 @@ class Utils extends StatelessWidget {
       child: ElevatedButton(
         style: style,
         onPressed: () {
-          if(key.currentState!.validate()){
+          if(key.currentState!.saveAndValidate()){
+            final formData = key.currentState?.value;
+            
             //TODO change from hardcoded buttons
             if (text == "LOGIN") {
-              signInEmail("barry.allen@example.com", "SuperSecretPassword!");
+              log(formData!["email"]);
+              log(formData["pass"]);
+            //   signInEmail("barry.allen@example.com", "SuperSecretPassword!");
             } else if (text == "CREATE ACCOUNT") {
-              signUpEmail("barry.allen@example.com", "SuperSecretPassword!", "Barry Allen" , "000000000ZZ4");
+              log(formData!["user"]);
+              log(formData["pass"]);
+              log(formData["pass2"]);
+              log(formData["email"]);
+              log(formData["cc"]);
+            //   signUpEmail("barry.allen@example.com", "SuperSecretPassword!", "Barry Allen" , "000000000ZZ4");
+              //_formKey.currentState?.invalidateField(name: 'email', errorText: 'Email already taken.');
             }
           }
         },
@@ -143,45 +161,59 @@ class Utils extends StatelessWidget {
     throw UnimplementedError();
   }
 
-  void signInEmail(email, password) async {
+  Future<String?> signInEmail(email, password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password
       );
+      return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
+      return e.code;
     }
   }
 
-  void signUpEmail(email, password, name, cc) async {
+  Future<String?> signUpEmail(email, password, name, cc) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password );
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
       //TODO add cc
       AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
       await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential);
+      return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
+      return e.code;
     }
   }
 
-  String? validateDefault(text) {
+  String? validateDefault(String? text) {
+    if (text == null || text.isEmpty){
+      return "Field cannot be empty";
+    }
     return null;
   }
 
-  String? validateEmail(email) {
+  String? validateEmail(String? email) {
+    if (email == null || email.isEmpty){
+      return "Field cannot be empty";
+    }
     if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
       return null;
     }
     return "Invalid email address";
   }
 
-  String? validateCC(String CC) {
+  String? validateCC(String? CC) {
     int sum = 0;
     bool secondDigit = false;
+    if (CC == null || CC.isEmpty){
+      return "Field cannot be empty";
+    }
+    CC = CC.replaceAll(' ', '');
     if(CC.length != 12) {
       return "Invalid size for CC";
     }
@@ -211,7 +243,7 @@ class Utils extends StatelessWidget {
     try {
       int a = int.parse(s);
       return a;
-    } on FormatException catch (e) {
+    } on FormatException {
       return s.codeUnitAt(0) - 55;
     }
   }
@@ -219,7 +251,7 @@ class Utils extends StatelessWidget {
 
 }
 
-enum InputType {
+enum FormInputType {
   Email,
   Password,
   User,

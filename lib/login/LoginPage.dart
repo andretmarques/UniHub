@@ -1,10 +1,11 @@
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:unihub/signin/google/SignInPage.dart';
-import 'package:unihub/Utils/Utils.dart';
+import 'package:unihub/utils/Utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   static const utils = Utils();
-  final GlobalKey<FormState> _test2Form = GlobalKey<FormState>();
+  final GlobalKey<FormBuilderState> _test2Form = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +30,12 @@ class _LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.all(50.0)),
               //const Padding(padding: EdgeInsets.only(bottom: 30.0)),
               utils.buildTextLabel("Please login to continue"),
-              Form(
+              FormBuilder(
                   key: _test2Form,
                   child: Column(
                       children: [
-                        utils.buildInput(InputType.Email),
-                        utils.buildInput(InputType.Password),
+                        utils.buildInput(FormInputType.Email),
+                        utils.buildInput(FormInputType.Password),
                       ]
                   )
               ),
