@@ -86,26 +86,25 @@ class Utils extends StatelessWidget {
       );
     }
 
-    Widget buildTextButtonLabel(String text) {
     Widget buildTextButtonLabel(String text, BuildContext context, int i) {
-
-      return TextButton(child: Text(text,
-        style: GoogleFonts.roboto(
-            color: Constants.PRIMARY_COLOR,
-            fontWeight: FontWeight.w400,
-            fontSize: 14),
-    ),
-        onPressed: () {
-          if (i == 1) {
-            Navigator.pop(context);
-          } else if (i == 2) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RegisterPage()));
-          }
-        },
-      );
-  }
+        return TextButton(child: Text(text,
+          style: GoogleFonts.roboto(
+              color: Constants.PRIMARY_COLOR,
+              fontWeight: FontWeight.w400,
+              fontSize: 14),
+        ),
+          onPressed: () {
+            if (i == 1) {
+              Navigator.pop(context);
+            } else if (i == 2) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterPage()));
+            }
+          },
+        );
+      }
 
   Widget buildTextLabel(String text) {
     return Text(text,
