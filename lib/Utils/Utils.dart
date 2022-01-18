@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unihub/constants/Constants.dart' as Constants;
+
 
 enum InputType {
   Email,
@@ -64,7 +66,7 @@ class Utils extends StatelessWidget {
   }
 
   Widget buildButton(String text) {
-      final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: const Size(275, 56), primary: const Color.fromRGBO(88, 136, 204, 1));
+      final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: const Size(275, 56), primary: Constants.PRIMARY_COLOR);
 
       return Center (
         child: Container (

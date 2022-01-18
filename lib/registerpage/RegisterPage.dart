@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/Utils/Utils.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
-
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -12,19 +11,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   static const utils = Utils();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
-                  margin: const EdgeInsets.only(top:50.0)),
+              Container(
+                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
+                  margin: const EdgeInsets.only(top: 50.0)),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
@@ -35,11 +34,13 @@ class _RegisterPageState extends State<RegisterPage> {
               utils.buildInput(InputType.ConfirmPassword),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildButton("CREATE ACCOUNT"),
-              Row( children: [utils.buildTextLabel("Already have an account?"),
-                utils.buildTextButtonLabel('Login')],
+              Row(
+                  children: [
+                    utils.buildTextLabel("Already have an account?"),
+                    utils.buildTextButtonLabel('Login')
+                  ],
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center
-              ),
+                  crossAxisAlignment: CrossAxisAlignment.center),
             ]),
       ),
     );
@@ -48,7 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildBlueTextLabel(String text) {
     return Text(text,
         style: GoogleFonts.roboto(
-            color: const Color.fromRGBO(88, 136, 204, 1), fontWeight: FontWeight.w700, fontSize: 26)
-    );
+            color: Constants.PRIMARY_COLOR,
+            fontWeight: FontWeight.w700,
+            fontSize: 26));
   }
 }
