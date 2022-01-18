@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'pack'
+import 'package:unihub/landingpage/LandingPage.dart';
+import 'package:unihub/login/LoginPage.dart';
 
 class SilentLogin extends StatelessWidget {
   const SilentLogin({Key? key}) : super(key: key);
@@ -14,7 +15,8 @@ class SilentLogin extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(),);
           } else if (snapshot.hasData) {
-            return const ;
+            String user = (snapshot.data as User).displayName ?? "Error";
+            return LandingPage(username: user);
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something Went wrong!"),);
           } else {

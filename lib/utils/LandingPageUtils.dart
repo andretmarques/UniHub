@@ -29,7 +29,7 @@ class LandingPageUtils {
 
         ),
         const SizedBox(height: 15),
-        Text( "User " + username,
+        Text( username,
           textAlign: TextAlign.center,
           style: GoogleFonts.roboto(
               fontSize: 24,
