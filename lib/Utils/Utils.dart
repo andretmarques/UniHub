@@ -2,21 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
-
-enum InputType {
-  Email,
-  Password,
-  User,
-  ConfirmPassword
-
-}
-
-enum AssetType {
-  Facebook,
-  Google
-}
-
-
 class Utils extends StatelessWidget {
   const Utils({Key? key}) : super(key: key);
 
@@ -98,7 +83,7 @@ class Utils extends StatelessWidget {
     Widget buildTextButtonLabel(String text) {
       return TextButton(child: Text(text,
         style: GoogleFonts.roboto(
-            color: const Color.fromRGBO(88, 136, 204, 1),
+            color: Constants.PRIMARY_COLOR,
             fontWeight: FontWeight.w400,
             fontSize: 14),
     ),
@@ -117,4 +102,18 @@ class Utils extends StatelessWidget {
   Widget build(BuildContext context) {
     throw UnimplementedError();
   }
+
+}
+
+enum InputType {
+  Email,
+  Password,
+  User,
+  ConfirmPassword
+
+}
+
+enum AssetType {
+  Facebook,
+  Google
 }

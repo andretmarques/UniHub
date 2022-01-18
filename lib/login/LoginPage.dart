@@ -28,17 +28,21 @@ class _LoginPageState extends State<LoginPage> {
               utils.buildTextLabel("Please login to continue"),
               utils.buildInput(InputType.Email),
               utils.buildInput(InputType.Password),
-              Container(width: 350, child:utils.buildTextButtonLabel("Forgot Password?"), alignment: Alignment.centerRight),
+              Container(width: 350,
+                  child:utils.buildTextButtonLabel("Forgot Password?"),
+                  alignment: Alignment.centerRight),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildButton("LOGIN"),
-              Row( children: [utils.buildTextLabel("Don't have an account?"),
-                utils.buildTextButtonLabel('Create a new account')],
+              Row( children:
+                  [utils.buildTextLabel("Don't have an account?"),
+                  utils.buildTextButtonLabel('Create a new account')],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center
               ) ,
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildTextLabel("LOGIN WITH:"),
-              Row(children: [_buildLogos(AssetType.Facebook),
+              Row(children:
+                [_buildLogos(AssetType.Facebook),
                 _buildLogos(AssetType.Google)],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center
