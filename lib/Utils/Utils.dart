@@ -86,6 +86,7 @@ class Utils extends StatelessWidget {
       );
     }
 
+    Widget buildTextButtonLabel(String text) {
     Widget buildTextButtonLabel(String text, BuildContext context, int i) {
 
       return TextButton(child: Text(text,
@@ -126,13 +127,6 @@ enum InputType {
   User,
   ConfirmPassword,
   CC
-
-}
-
-enum Route {
-  Login,
-  Register,
-  ForgotPassword
 
 }
 

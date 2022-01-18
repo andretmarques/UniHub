@@ -28,11 +28,13 @@ class _RegisterPageState extends State<RegisterPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(Constants.HALF_LOGO, scale: 1.5),
+              Container(
+                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
+                  margin: const EdgeInsets.only(top: 50.0)),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
-              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildInput(InputType.User),
               utils.buildInput(InputType.Email),
               utils.buildInput(InputType.Password),

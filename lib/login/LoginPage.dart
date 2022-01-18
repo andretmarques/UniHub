@@ -1,7 +1,9 @@
+import 'package:provider/provider.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_shadow/simple_shadow.dart';
+import 'package:unihub/signin/google/SignInPage.dart';
 import 'package:unihub/Utils/Utils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -65,7 +67,10 @@ class _LoginPageState extends State<LoginPage> {
               height:49,
               width: 49
           ),
-          onPressed: () {}
+          onPressed: () {
+            final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+            provider.googleLogin();
+          }
       ),
     );
   }
