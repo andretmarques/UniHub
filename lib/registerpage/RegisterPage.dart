@@ -13,7 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   static const utils = Utils();
-  final GlobalKey<FormBuilderState> _testForm = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _registerForm = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
               FormBuilder(
                 //TODO perguntar qual preferem key ou auto
                 //autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _testForm,
+                  key: _registerForm,
                   child: Column(
                       children: [
                         utils.buildInput(FormInputType.User),
@@ -49,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         utils.buildInput(FormInputType.ConfirmPassword),
                         utils.buildInput(FormInputType.CC),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-                        utils.buildButton("CREATE ACCOUNT", _testForm),
+                        utils.buildButton("CREATE ACCOUNT", _registerForm),
                   ])
               ),
               Row(

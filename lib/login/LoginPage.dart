@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   static const utils = Utils();
-  final GlobalKey<FormBuilderState> _test2Form = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _loginForm = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
               //const Padding(padding: EdgeInsets.only(bottom: 30.0)),
               utils.buildTextLabel("Please login to continue"),
               FormBuilder(
-                  key: _test2Form,
+                  key: _loginForm,
                   child: Column(
                       children: [
                         utils.buildInput(FormInputType.Email),
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   child:utils.buildTextButtonLabel("Forgot Password?", context, 3),
                   alignment: Alignment.centerRight),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildButton("LOGIN", _test2Form),
+              utils.buildButton("LOGIN", _loginForm),
               Row( children:
                   [utils.buildTextLabel("Don't have an account?"),
                   utils.buildTextButtonLabel('Create a new account', context, 2)],
