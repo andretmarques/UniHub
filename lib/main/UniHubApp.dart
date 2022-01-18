@@ -51,10 +51,10 @@ class UniHubApp extends StatelessWidget {
           },
         ),
         // initialRoute: '/LoginPage',
-        // routes: {
-        //   '/LandingPage': (context) => const LandingPage(username: username),
-        //   '/LoginPage': (context) => const LoginPage()
-        // },
+        routes: {
+           '/LandingPage': (context) => const LandingPage(username: username),
+           '/LoginPage': (context) => const LoginPage()
+        },
 
       )
     );
