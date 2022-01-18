@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unihub/login/LoginPage.dart';
+import 'package:unihub/registerpage/RegisterPage.dart';
 import 'package:unihub/taskpages/homepage/HomePage.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 
@@ -25,10 +26,11 @@ class UniHubApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/LandingPage',
+      initialRoute: '/RegisterPage',
       routes: {
         '/LandingPage': (context) => const LandingPage(username: username),
-        '/LoginPage': (context) => const LoginPage()
+        '/LoginPage': (context) => const LoginPage(),
+        '/RegisterPage': (context) => const RegisterPage()
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
