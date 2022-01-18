@@ -25,7 +25,7 @@ class UniHubApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
       ),
-      initialRoute: '/RegisterPage',
+      initialRoute: '/LandingPage',
       routes: {
         '/LandingPage': (context) => const LandingPage(username: username),
         '/LoginPage': (context) => const LoginPage(),
