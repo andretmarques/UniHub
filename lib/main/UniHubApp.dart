@@ -6,7 +6,6 @@ import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/registerpage/RegisterPage.dart';
 import 'package:unihub/taskpages/homepage/HomePage.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
-import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/login/SilentLogin.dart';
 import 'package:unihub/signin/google/SignInPage.dart';
 import 'package:page_transition/page_transition.dart';
@@ -44,6 +43,7 @@ class UniHubApp extends StatelessWidget {
               return const Text('Something Went Wrong!');
             } else if (snapshot.hasData) {
               return AnimatedSplashScreen(splash: 'assets/images/half_logo.png',
+                splashIconSize: MediaQuery.of(context).size.width - 120,
                 pageTransitionType: PageTransitionType.bottomToTop,
                 duration: 1000, nextScreen: const SilentLogin(),
               );
