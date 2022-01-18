@@ -1,3 +1,4 @@
+import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -21,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(child: Image.asset('assets/images/uniHub.png', scale: 2),
+              Container(child: Image.asset(Constants.FULL_LOGO, scale: 2),
                   margin: const EdgeInsets.all(50.0)),
               //const Padding(padding: EdgeInsets.only(bottom: 30.0)),
               utils.buildTextLabel("Please login to continue"),
