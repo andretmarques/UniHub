@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/Utils/Utils.dart';
@@ -12,6 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   static const utils = Utils();
+  final GlobalKey<FormState> _testForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,21 @@ class _RegisterPageState extends State<RegisterPage> {
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildInput(InputType.User),
-              utils.buildInput(InputType.Email),
-              utils.buildInput(InputType.Password),
-              utils.buildInput(InputType.ConfirmPassword),
-              utils.buildInput(InputType.CC),
-              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildButton("CREATE ACCOUNT"),
+              Form(
+                //TODO perguntar qual preferem key ou auto
+                //autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: _testForm,
+                  child: Column(
+                      children: [
+                        utils.buildInput(InputType.User),
+                        utils.buildInput(InputType.Email),
+                        utils.buildInput(InputType.Password),
+                        utils.buildInput(InputType.ConfirmPassword),
+                        utils.buildInput(InputType.CC),
+                        const Padding(padding: EdgeInsets.only(bottom: 50.0)),
+                        utils.buildButton("CREATE ACCOUNT", _testForm),
+                  ])
+              ),
               Row(
                   children: [
                     utils.buildTextLabel("Already have an account?"),
