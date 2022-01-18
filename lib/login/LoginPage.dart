@@ -29,13 +29,13 @@ class _LoginPageState extends State<LoginPage> {
               utils.buildInput(InputType.Email),
               utils.buildInput(InputType.Password),
               Container(width: 350,
-                  child:utils.buildTextButtonLabel("Forgot Password?"),
+                  child:utils.buildTextButtonLabel("Forgot Password?", context, 3),
                   alignment: Alignment.centerRight),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildButton("LOGIN"),
               Row( children:
                   [utils.buildTextLabel("Don't have an account?"),
-                  utils.buildTextButtonLabel('Create a new account')],
+                  utils.buildTextButtonLabel('Create a new account', context, 2)],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center
               ) ,
@@ -70,6 +70,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 

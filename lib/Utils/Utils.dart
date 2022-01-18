@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
+import 'package:unihub/login/LoginPage.dart';
+import 'package:unihub/registerpage/RegisterPage.dart';
 
 class Utils extends StatelessWidget {
   const Utils({Key? key}) : super(key: key);
@@ -25,6 +27,10 @@ class Utils extends StatelessWidget {
       case InputType.ConfirmPassword:
         icon = const Icon(Icons.lock);
         textLabel = "Confirm Password";
+        break;
+      case InputType.CC:
+        icon = const Icon(Icons.credit_card);
+        textLabel = "Identification";
         break;
     }
     return Container(
@@ -80,15 +86,24 @@ class Utils extends StatelessWidget {
       );
     }
 
-    Widget buildTextButtonLabel(String text) {
+    Widget buildTextButtonLabel(String text, BuildContext context, int i) {
+
       return TextButton(child: Text(text,
         style: GoogleFonts.roboto(
             color: Constants.PRIMARY_COLOR,
             fontWeight: FontWeight.w400,
             fontSize: 14),
     ),
-        onPressed: () {}
-    );
+        onPressed: () {
+          if (i == 1) {
+            Navigator.pop(context);
+          } else if (i == 2) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RegisterPage()));
+          }
+        },
+      );
   }
 
   Widget buildTextLabel(String text) {
@@ -109,7 +124,15 @@ enum InputType {
   Email,
   Password,
   User,
-  ConfirmPassword
+  ConfirmPassword,
+  CC
+
+}
+
+enum Route {
+  Login,
+  Register,
+  ForgotPassword
 
 }
 

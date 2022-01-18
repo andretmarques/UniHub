@@ -16,28 +16,34 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Constants.PRIMARY_COLOR
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0
+    ),
       body: SingleChildScrollView(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
-                  margin: const EdgeInsets.only(top: 50.0)),
+              Image.asset(Constants.HALF_LOGO, scale: 1.5),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
-              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
+              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildInput(InputType.User),
               utils.buildInput(InputType.Email),
               utils.buildInput(InputType.Password),
               utils.buildInput(InputType.ConfirmPassword),
+              utils.buildInput(InputType.CC),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildButton("CREATE ACCOUNT"),
               Row(
                   children: [
                     utils.buildTextLabel("Already have an account?"),
-                    utils.buildTextButtonLabel('Login')
+                    utils.buildTextButtonLabel('Login', context, 1)
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center),
