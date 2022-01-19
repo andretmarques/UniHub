@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -94,17 +95,36 @@ class Utils extends StatelessWidget {
             
             //TODO change from hardcoded buttons
             if (text == "LOGIN") {
-              log(formData!["email"]);
-              log(formData["pass"]);
-            //   signInEmail("barry.allen@example.com", "SuperSecretPassword!");
+              Future<String?> ret = signInEmail(formData!["email"], formData["pass"]);
+              ret.then((value) {
+                if (value == 'user-not-found') {
+                  key.currentState?.invalidateField(name: 'email', errorText: 'User not found');
+                  return;
+                } else if (value == 'wrong-password') {
+                  key.currentState?.invalidateField(name: 'pass', errorText: 'Wrong password');
+                  return;
+                }
+                //TODO entrar na Landing Page
+              });
+
             } else if (text == "CREATE ACCOUNT") {
-              log(formData!["user"]);
-              log(formData["pass"]);
-              log(formData["pass2"]);
-              log(formData["email"]);
-              log(formData["cc"]);
-            //   signUpEmail("barry.allen@example.com", "SuperSecretPassword!", "Barry Allen" , "000000000ZZ4");
-              //_formKey.currentState?.invalidateField(name: 'email', errorText: 'Email already taken.');
+
+              if (formData!["pass"] != formData["pass2"]){
+                key.currentState?.invalidateField(name: 'pass2', errorText: 'Passwords must match');
+                return;
+              }
+              Future<String?> ret = signUpEmail(formData["email"], formData["pass"], formData["user"] , formData["cc"]);
+
+              ret.then((value) {
+                if (value == 'weak-password') {
+                  key.currentState?.invalidateField(name: 'pass', errorText: 'Passwords is too weak');
+                  return;
+                } else if (value == 'email-already-in-use') {
+                  key.currentState?.invalidateField(name: 'email', errorText: 'Email already in use');
+                  return;
+                }
+                //TODO entrar na Landing Page
+              });
             }
           }
         },
@@ -180,9 +200,13 @@ class Utils extends StatelessWidget {
           email: email,
           password: password );
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-      //TODO add cc
-      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
-      await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential);
+      final ref = FirebaseDatabase.instance.ref("users");
+      String? uid = FirebaseAuth.instance.currentUser?.uid;
+      ref.child(uid!).set({
+        "cc": cc,
+        "isTeacher": false,
+        "tokens": 999,
+      });
       return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
