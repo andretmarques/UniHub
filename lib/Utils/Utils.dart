@@ -231,23 +231,23 @@ class Utils extends StatelessWidget {
     return "Invalid email address";
   }
 
-  String? validateCC(String? CC) {
+  String? validateCC(String? cc) {
     int sum = 0;
     bool secondDigit = false;
-    if (CC == null || CC.isEmpty){
+    if (cc == null || cc.isEmpty){
       return "Field cannot be empty";
     }
-    CC = CC.replaceAll(' ', '');
-    if(CC.length != 12) {
+    cc = cc.replaceAll(' ', '');
+    if(cc.length != 12) {
       return "Invalid size for CC";
     }
-    CC = CC.toUpperCase();
-    if(!RegExp(r"^[A-Z0-9]*$").hasMatch(CC)){
+    cc = cc.toUpperCase();
+    if(!RegExp(r"^[A-Z0-9]*$").hasMatch(cc)){
       return "Invalid characters on CC";
     }
-    for (int i = CC.length - 1; i >= 0; --i)
+    for (int i = cc.length - 1; i >= 0; --i)
     {
-      int value = getNumber(CC[i]);
+      int value = getNumber(cc[i]);
       if (secondDigit) {
         value *= 2;
         if (value > 9) {
@@ -258,6 +258,9 @@ class Utils extends StatelessWidget {
       secondDigit = !secondDigit;
     }
     if((sum % 10) == 0){
+      final ref = FirebaseDatabase.instance.ref();
+      Query query = ref.child("users").orderByChild("cc").equalTo(cc);
+      //todo query
       return null;
     }
     return "Invalid CC";
