@@ -50,7 +50,7 @@ class _IdentityPageState extends State<IdentityPage> {
                             margin: EdgeInsets.all(25.0)),
                         utils.buildInput(FormInputType.CC),
                         const Padding(padding: EdgeInsets.only(bottom: 40.0)),
-                        Container(child: Text('Choose your roole', style: GoogleFonts.roboto(
+                        Container(child: Text('Choose your role', style: GoogleFonts.roboto(
                             color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 16)),
                             alignment: Alignment.center),
                         const Padding(padding: EdgeInsets.only(bottom: 10.0)),
