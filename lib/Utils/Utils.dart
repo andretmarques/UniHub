@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
+import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/registerpage/RegisterPage.dart';
 import 'dart:developer';
 
@@ -82,7 +83,7 @@ class Utils extends StatelessWidget {
     );
   }
 
-  Widget buildButton(String text, GlobalKey<FormBuilderState> key) {
+  Widget buildButton(String text, GlobalKey<FormBuilderState> key, BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: const Size(275, 56), primary: Constants.PRIMARY_COLOR);
 
     return Center (
@@ -107,7 +108,7 @@ class Utils extends StatelessWidget {
                 //TODO entrar na Landing Page
               });
 
-            } else if (text == "CREATE ACCOUNT") {
+            } else if (text == "NEXT") {
 
               if (formData!["pass"] != formData["pass2"]){
                 key.currentState?.invalidateField(name: 'pass2', errorText: 'Passwords must match');
@@ -123,8 +124,14 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'email', errorText: 'Email already in use');
                   return;
                 }
-                //TODO entrar na Landing Page
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const IdentityPage()));
               });
+            }
+            else if (text == "CREATE") {
+              //TODO entrar na Landing Page
             }
           }
         },

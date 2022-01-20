@@ -31,12 +31,11 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
-                  margin: const EdgeInsets.only(top: 50.0)),
+                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5)),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
-              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
+              const Padding(padding: EdgeInsets.only(bottom: 20.0)),
               FormBuilder(
                 //TODO perguntar qual preferem key ou auto
                 //autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -47,9 +46,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         utils.buildInput(FormInputType.Email),
                         utils.buildInput(FormInputType.Password),
                         utils.buildInput(FormInputType.ConfirmPassword),
-                        utils.buildInput(FormInputType.CC),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-                        utils.buildButton("CREATE ACCOUNT", _registerForm),
+                        utils.buildButton("NEXT", _registerForm, context),
                   ])
               ),
               Row(
