@@ -45,16 +45,13 @@ class _TabViewControllerState extends State<TabViewController> {
                 Container(color: Constants.PURPLE, height: height), clipper: BezierClipper()),
                 Column(
                     children: [
-                      //const Padding(padding: EdgeInsets.only(top: 25.0)),
                       Stack(
                           children: [Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children:
-                            [//const Padding(padding: EdgeInsets.only(right: 30.0)),
+                            [
                               _buildLogos("HELP"),
-                              //const Padding(padding: EdgeInsets.only(right: 80.0)),
                               loadHalfLogo(),
-                              //const Padding(padding: EdgeInsets.only(right: 70.0)),
                               _buildLogos("BELL")],
                           )]
                       )]
