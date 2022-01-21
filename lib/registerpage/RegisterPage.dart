@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unihub/Utils/Utils.dart';
+import 'package:unihub/utils/Utils.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
 class RegisterPage extends StatefulWidget {
@@ -12,32 +13,47 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   static const utils = Utils();
+  final GlobalKey<FormBuilderState> _registerForm = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Constants.PRIMARY_COLOR
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0
+    ),
       body: SingleChildScrollView(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5),
-                  margin: const EdgeInsets.only(top: 50.0)),
+                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5)),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
-              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildInput(InputType.User),
-              utils.buildInput(InputType.Email),
-              utils.buildInput(InputType.Password),
-              utils.buildInput(InputType.ConfirmPassword),
-              const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildButton("CREATE ACCOUNT"),
+              const Padding(padding: EdgeInsets.only(bottom: 20.0)),
+              FormBuilder(
+                //TODO perguntar qual preferem key ou auto
+                //autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: _registerForm,
+                  child: Column(
+                      children: [
+                        utils.buildInput(FormInputType.User),
+                        utils.buildInput(FormInputType.Email),
+                        utils.buildInput(FormInputType.Password),
+                        utils.buildInput(FormInputType.ConfirmPassword),
+                        const Padding(padding: EdgeInsets.only(bottom: 50.0)),
+                        utils.buildButton("NEXT", _registerForm, context),
+                  ])
+              ),
               Row(
                   children: [
                     utils.buildTextLabel("Already have an account?"),
-                    utils.buildTextButtonLabel('Login')
+                    utils.buildTextButtonLabel('Login', context, 1)
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center),

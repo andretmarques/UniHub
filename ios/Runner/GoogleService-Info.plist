@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>693178122918-29h91rtli9e6af1jra7gom2ctdr2qk0j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.693178122918-29h91rtli9e6af1jra7gom2ctdr2qk0j</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>693178122918-qpn2uivnpn9u8gjpp008ccal5nihgr43.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDtPovvTKJRqu_YvQI2j63HMPoW7LlAkGw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>693178122918</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.unihub.unihub</string>
+	<key>PROJECT_ID</key>
+	<string>unihub-c6957</string>
+	<key>STORAGE_BUCKET</key>
+	<string>unihub-c6957.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:693178122918:ios:c2b41322331568fcf02a67</string>
+	<key>DATABASE_URL</key>
+	<string>https://unihub-c6957-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
