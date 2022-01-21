@@ -57,13 +57,12 @@ class _SwipeCardsState extends State<SwipeCards> {
               ),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(bottom: 50.0)),
+          const Padding(padding: EdgeInsets.only(bottom: 25.0)),
           Row(
               children: [_buildLogos("CROSS", controller),
-                const Padding(padding: EdgeInsets.only(right: 150.0)),
                 _buildLogos("LOVE", controller)],
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center)],
+              mainAxisAlignment: MainAxisAlignment.spaceAround)],
       ),
     );
   }
@@ -88,10 +87,19 @@ class _SwipeCardsState extends State<SwipeCards> {
         pressed = controller.swipeRight;
         break;
     }
-
-    return IconButton(
-        icon: icon,
-        onPressed: () {pressed();}
+    return Center(
+        child: Container(
+            height: 95,
+            alignment: Alignment.center,
+            child: Container(
+                height: 95,
+                width: 95,
+                child: IconButton(
+                  icon: icon,
+                  onPressed: () {pressed();}
+                  )
+            )
+        )
     );
   }
 
