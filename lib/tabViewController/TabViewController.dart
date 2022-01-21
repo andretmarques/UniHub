@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 import 'package:unihub/login/LoginPage.dart';
-import 'package:unihub/registerpage/RegisterPage.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
+import 'package:unihub/votingPage/VotingPage.dart';
+
+import 'BazeierClipper.dart';
 
 class TabViewController extends StatefulWidget {
   const TabViewController({Key? key}) : super(key: key);
@@ -34,22 +34,42 @@ class _TabViewControllerState extends State<TabViewController> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height * 0.52;
+
     return Scaffold(
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
-          children: const <Widget>[
-            //TODO ALTERAR AS PAGINAS DAS TABS
-            RegisterPage(),
-            LandingPage(username: "username"),
-            LoginPage(),
-            LandingPage(username: "username"),
-          ],
-        ),
-      ),
+        body: Stack(
+            children: <Widget>[
+              ClipPath(child:
+              Container(color: Constants.PURPLE, height: height), clipper: BezierClipper()),
+              Column(
+                  children: [
+                    const Padding(padding: EdgeInsets.only(top: 50.0)),
+                    Stack(
+                      children: [Row(
+                        children:
+                        [const Padding(padding: EdgeInsets.only(right: 30.0)),
+                          _buildLogos("HELP"),
+                          const Padding(padding: EdgeInsets.only(right: 80.0)),
+                          loadHalfLogo(),
+                          const Padding(padding: EdgeInsets.only(right: 70.0)),
+                          _buildLogos("BELL")],
+                      )]
+                    )]
+              ),
+              SizedBox.expand(
+                child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (index) {setState(() => _currentIndex = index);},
+                    children:
+                    const <Widget>[
+                      LandingPage(username: "username"),
+                      LoginPage(),
+                      LandingPage(username: "username"),
+                      VotingPage(),
+                    ])
+              )
+    ]),
+
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         iconSize: 32,
@@ -93,6 +113,44 @@ class _TabViewControllerState extends State<TabViewController> {
           ),
         ],
       ),
+    );
+  }
+  Container loadHalfLogo() {
+    return Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: Image.asset(Constants.HALF_LOGO, scale: 2)
+    );
+  }
+
+  Widget _buildLogos(String type) {
+    var help = const Icon(Icons.help_outline_rounded, size: 40, color: Colors.white,);
+
+    var bell = const Icon(Icons.notifications_none_rounded, size: 40, color: Colors.white,);
+
+    var love = const Icon(Icons.favorite_border_rounded, size: 50, color: Constants.PINK_BUTTON);
+
+    var cross = const Icon(Icons.close, size: 50, color: Constants.PINK_BUTTON);
+
+    var icon;
+
+    switch (type) {
+      case "HELP":
+        icon = help;
+        break;
+      case "BELL":
+        icon = bell;
+        break;
+      case "LOVE":
+        icon = love;
+        break;
+      case "CROSS":
+        icon = cross;
+        break;
+    }
+
+    return IconButton(
+        icon: icon,
+        onPressed: () {}
     );
   }
 }
