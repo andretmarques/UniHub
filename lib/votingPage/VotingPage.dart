@@ -22,7 +22,7 @@ class _VotingPageState extends State<VotingPage> {
       backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            const Padding(padding: EdgeInsets.only(top: 150.0)),
+            const Padding(padding: EdgeInsets.only(top: 125.0)),
             buildTextLabel("Please evaluate 5 tasks"),
                   const SwipeCards()
           ])

@@ -38,40 +38,42 @@ class _TabViewControllerState extends State<TabViewController> {
     final double height = MediaQuery.of(context).size.height * 0.52;
 
     return Scaffold(
-        body: Stack(
-            children: <Widget>[
-              ClipPath(child:
-              Container(color: Constants.PURPLE, height: height), clipper: BezierClipper()),
-              Column(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 25.0)),
-                    Stack(
-                      children: [Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children:
-                        [//const Padding(padding: EdgeInsets.only(right: 30.0)),
-                          _buildLogos("HELP"),
-                          //const Padding(padding: EdgeInsets.only(right: 80.0)),
-                          loadHalfLogo(),
-                          //const Padding(padding: EdgeInsets.only(right: 70.0)),
-                          _buildLogos("BELL")],
+        body: SafeArea(
+          child: Stack(
+              children: <Widget>[
+                ClipPath(child:
+                Container(color: Constants.PURPLE, height: height), clipper: BezierClipper()),
+                Column(
+                    children: [
+                      //const Padding(padding: EdgeInsets.only(top: 25.0)),
+                      Stack(
+                          children: [Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children:
+                            [//const Padding(padding: EdgeInsets.only(right: 30.0)),
+                              _buildLogos("HELP"),
+                              //const Padding(padding: EdgeInsets.only(right: 80.0)),
+                              loadHalfLogo(),
+                              //const Padding(padding: EdgeInsets.only(right: 70.0)),
+                              _buildLogos("BELL")],
+                          )]
                       )]
-                    )]
-              ),
-              SizedBox.expand(
-                child: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (index) {setState(() => _currentIndex = index);},
-                    children:
-                    const <Widget>[
-                      VotingPage(),
-                      LandingPage(username: "username"),
-                      LoginPage(),
-                      IdentityPage()
-                    ])
-              )
-    ]),
+                ),
+                SizedBox.expand(
+                    child: PageView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        onPageChanged: (index) {setState(() => _currentIndex = index);},
+                        children:
+                        const <Widget>[
+                          VotingPage(),
+                          LandingPage(username: "username"),
+                          LoginPage(),
+                          IdentityPage()
+                        ])
+                )
+              ]),
+        ),
 
       bottomNavigationBar: CustomNavBar(
         selectedIndex: _currentIndex,
@@ -140,14 +142,10 @@ class _TabViewControllerState extends State<TabViewController> {
         child: Container(
             height: 80,
             alignment: Alignment.center,
-            child: Container(
-                height: 80,
-                width: 80,
-                child: IconButton(
-                    icon: icon,
-                    onPressed: () {}
+            child: IconButton(
+                icon: icon,
+                onPressed: () {}
                 )
-            )
         )
     );
   }
