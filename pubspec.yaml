@@ -45,8 +45,6 @@ dependencies:
   animated_splash_screen: ^1.1.0
   flutter_form_builder: ^7.0.0
   firebase_database: ^9.0.5
-  bottom_navy_bar: ^6.0.0
-  appinio_swiper: ^1.0.2
 
 dev_dependencies:
   flutter_test:
