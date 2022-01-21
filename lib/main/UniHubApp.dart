@@ -3,11 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unihub/login/LoginPage.dart';
+import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 import 'package:unihub/login/SilentLogin.dart';
 import 'package:unihub/signin/google/SignInPage.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:unihub/votingPage/VotingPage.dart';
 
 class UniHubApp extends StatelessWidget {
 
@@ -54,12 +54,10 @@ class UniHubApp extends StatelessWidget {
             }
           },
         ),
-        initialRoute: '/MyHomePage',
+        // initialRoute: '/LoginPage',
         routes: {
            '/LandingPage': (context) => const LandingPage(username: username),
-           '/LoginPage': (context) => const LoginPage(),
-           '/MyHomePage': (context) => const VotingPage()
-
+           '/LoginPage': (context) => const LoginPage()
         },
 
       )

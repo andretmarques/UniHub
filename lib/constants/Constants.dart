@@ -11,9 +11,6 @@ const Color PURPLE = Color.fromRGBO(155, 132, 243, 1);
 const Color PINK_BUTTON = Color.fromRGBO(255, 102, 186, 0.9);
 
 
-
-
-
 /* ------> LOGOS <------ */
 const String HALF_LOGO = 'assets/images/half_logo.png';
 const String FULL_LOGO = 'assets/images/full_logo.png';

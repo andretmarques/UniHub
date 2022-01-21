@@ -1,10 +1,11 @@
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:unihub/signin/google/SignInPage.dart';
-import 'package:unihub/Utils/Utils.dart';
+import 'package:unihub/utils/Utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   static const utils = Utils();
+  final GlobalKey<FormBuilderState> _loginForm = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,23 @@ class _LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.all(50.0)),
               //const Padding(padding: EdgeInsets.only(bottom: 30.0)),
               utils.buildTextLabel("Please login to continue"),
-              utils.buildInput(InputType.Email),
-              utils.buildInput(InputType.Password),
+              FormBuilder(
+                  key: _loginForm,
+                  child: Column(
+                      children: [
+                        utils.buildInput(FormInputType.Email),
+                        utils.buildInput(FormInputType.Password),
+                      ]
+                  )
+              ),
               Container(width: 350,
-                  child:utils.buildTextButtonLabel("Forgot Password?"),
+                  child:utils.buildTextButtonLabel("Forgot Password?", context, 3),
                   alignment: Alignment.centerRight),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildButton("LOGIN"),
+              utils.buildButton("LOGIN", _loginForm, context),
               Row( children:
                   [utils.buildTextLabel("Don't have an account?"),
-                  utils.buildTextButtonLabel('Create a new account')],
+                  utils.buildTextButtonLabel('Create a new account', context, 2)],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center
               ) ,
@@ -75,6 +84,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 
