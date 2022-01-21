@@ -24,7 +24,7 @@ class _LandingWelcomePageState extends State<LandingPage> {
     return Scaffold(
       body: Stack(
         children: [
-          halfLogoUtils.loadHalfLogo(),
+          halfLogoUtils.loadHalfLogo(Alignment.topCenter),
           Align(
             child: landingPageUtils.createWelcomeCircle(context),
             alignment: Alignment.center,
