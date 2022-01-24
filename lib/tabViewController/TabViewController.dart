@@ -1,4 +1,7 @@
 
+import 'dart:developer';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -21,6 +24,7 @@ class TabViewController extends StatefulWidget {
 class _TabViewControllerState extends State<TabViewController> with TickerProviderStateMixin {
 
   int _currentIndex = 0;
+  double _heightMul = 0.5;
   late PageController _pageController;
   bool isFinalState = false;
   late AnimationController _animcontroller;
@@ -48,13 +52,15 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
     );
   }
 
-  _toggle(){
+  _toggle(finalState){
     setState(() {
-      isFinalState = !isFinalState;
-      if(!isFinalState) {
-        _animcontroller.reverse(from : 1.0);
-      } else {
-        _animcontroller.forward(from: 0.0);
+      if(finalState != isFinalState){
+        isFinalState = finalState;
+        if(!isFinalState) {
+          _animcontroller.reverse(from : 1.0);
+        } else {
+          _animcontroller.forward(from: 0.0);
+        }
       }
     });
   }
@@ -95,7 +101,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                                 child: Container(
                                     color: _finalAnimation.value,
                                     height: height),
-                                clipper: BezierClipper(progress)
+                                clipper: BezierClipper(progress, _heightMul)
                             );
                       },
                     ),
@@ -116,8 +122,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           )]
                       )]
                 ),
-                SizedBox.expand(
-                    child: PageView(
+                PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
                         onPageChanged: (index) {
@@ -136,7 +141,6 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           // LoginPage(),
                           // IdentityPage()
                         ])
-                )
               ]),
         ),
 
@@ -146,6 +150,24 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
         onItemSelected: (index) {
           changeColor(_currentIndex == index, index, _currentIndex);
           setState(() => _currentIndex = index);
+          switch(index){
+            case 0:
+              _heightMul = 0.5;
+              _toggle(false);
+              break;
+            case 1:
+              _heightMul = 0.2;
+              _toggle(false);
+              break;
+            case 2:
+              _heightMul = 0.8;
+              _toggle(true);
+              break;
+            case 3:
+              _heightMul = 0.8;
+              _toggle(true);
+              break;
+          }
           _pageController.jumpToPage(index);
         },
         items: <CustomNavBarItem>[
@@ -206,7 +228,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
 
     return IconButton(
         icon: icon,
-        onPressed: () {_toggle();}
+        onPressed: () {_toggle(!isFinalState);}
     );
   }
 }
