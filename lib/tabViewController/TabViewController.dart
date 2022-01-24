@@ -108,21 +108,8 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                     offset: const Offset(0, 4),
                     opacity: 0.25,
                 ),
-                Column(
-                    children: [
-                      Stack(
-                          children: [Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:
-                            [
-                              _buildLogos("HELP"),
-                              loadHalfLogo(),
-                              _buildLogos("BELL"),
-                            ],
-                          )]
-                      )]
-                ),
-                PageView(
+                SizedBox.expand(
+                    child: PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
                         onPageChanged: (index) {
@@ -141,6 +128,16 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           // LoginPage(),
                           // IdentityPage()
                         ])
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children:
+                  [
+                    _buildLogos("HELP"),
+                    loadHalfLogo(),
+                    _buildLogos("BELL"),
+                  ],
+                )
               ]),
         ),
 
