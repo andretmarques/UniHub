@@ -1,15 +1,9 @@
-
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
-import 'package:unihub/landingpage/LandingPage.dart';
-import 'package:unihub/login/LoginPage.dart';
+import 'package:unihub/faq/FaqPage.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:unihub/profile/profilepage.dart';
-import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
 import 'package:unihub/votingPage/VotingPage.dart';
 
@@ -114,10 +108,6 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
                         onPageChanged: (index) {
-                          //why set state here and on navbar??
-                          // setState(() => {
-                          //   _currentIndex = index
-                          // });
                         },
                         children:
                         const <Widget>[
@@ -125,18 +115,15 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           VotingPage(),
                           VotingPage(),
                           ProfilePage(),
-                          // LandingPage(username: "username"),
-                          // LoginPage(),
-                          // IdentityPage()
                         ])
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children:
                   [
-                    _buildLogos("HELP"),
+                    _buildLogos("HELP", context),
                     loadHalfLogo(),
-                    _buildLogos("BELL"),
+                    _buildLogos("BELL", context),
                   ],
                 )
               ]),
@@ -208,7 +195,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
     );
   }
 
-  Widget _buildLogos(String type) {
+  Widget _buildLogos(String type, BuildContext context) {
     var help = const Icon(Icons.help_outline_rounded, size: 40, color: Colors.white,);
 
     var bell = const Icon(Icons.notifications_none_rounded, size: 40, color: Colors.white,);
@@ -226,7 +213,15 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
 
     return IconButton(
         icon: icon,
-        onPressed: () {_toggle(!isFinalState);}
+        onPressed: () {
+          if(type == "HELP"){
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (context) => const FaqPage()));
+          } else {
+            _toggle(!isFinalState);
+          }
+        }
     );
   }
 }
