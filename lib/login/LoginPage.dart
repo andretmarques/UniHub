@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(child: Image.asset(Constants.FULL_LOGO, scale: 2),
-                  margin: const EdgeInsets.all(50.0)),
+                  margin: const EdgeInsets.all(20.0)),
               //const Padding(padding: EdgeInsets.only(bottom: 30.0)),
               utils.buildTextLabel("Please login to continue"),
               FormBuilder(

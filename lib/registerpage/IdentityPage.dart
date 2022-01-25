@@ -5,10 +5,13 @@ import 'package:unihub/utils/Utils.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
 class IdentityPage extends StatefulWidget {
-  const IdentityPage({Key? key}) : super(key: key);
+  const IdentityPage({Key? key, required this.formKey}) : super(key: key);
+  final GlobalKey<FormBuilderState> formKey;
+
 
   @override
-  State<IdentityPage> createState() => _IdentityPageState();
+  // ignore: no_logic_in_create_state
+  State<IdentityPage> createState() => _IdentityPageState(formKey: formKey);
 }
 
 class Tech
@@ -19,9 +22,10 @@ class Tech
 }
 
 class _IdentityPageState extends State<IdentityPage> {
+  _IdentityPageState ({Key? key , required this.formKey});
+  final GlobalKey<FormBuilderState> formKey;
+
   static const utils = Utils();
-  final GlobalKey<FormBuilderState> _registerForm = GlobalKey<
-      FormBuilderState>();
 
   int selectedIndex = 0;
   final List<Tech> _chipsList = [
@@ -42,7 +46,7 @@ class _IdentityPageState extends State<IdentityPage> {
               _buildBlueTextLabel('IDENTIFY YOURSELF'),
               const Padding(padding: EdgeInsets.only(bottom: 20.0)),
               FormBuilder(
-                  key: _registerForm,
+                  key: formKey,
                   child: Column(
                       children: [
                         Container(child: Image.asset(
@@ -58,7 +62,7 @@ class _IdentityPageState extends State<IdentityPage> {
                               direction: Axis.horizontal,
                               children: _buildIsTeacherFrom()),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-                        utils.buildButton("CREATE", _registerForm, context),
+                        utils.buildButton("CREATE", formKey, context),
                       ])
               ),
             ]),

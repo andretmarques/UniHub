@@ -16,6 +16,10 @@ const Color MAIN_PINK = Color.fromRGBO(255, 158, 194, 1.0);
 const Color MAIN_YELLOW = Color.fromRGBO(248, 191, 105, 1.0);
 
 
+
+const Color LOGO_GREY = Color.fromRGBO(80, 80, 80, 1.0);
+
+
 /* ------> LOGOS <------ */
 const String HALF_LOGO = 'assets/images/half_logo.png';
 const String FULL_LOGO = 'assets/images/full_logo.png';

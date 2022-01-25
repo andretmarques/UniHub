@@ -8,6 +8,7 @@ import 'package:simple_shadow/simple_shadow.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
+import 'package:unihub/profile/profilepage.dart';
 import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
 import 'package:unihub/votingPage/VotingPage.dart';
@@ -123,7 +124,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           VotingPage(),
                           VotingPage(),
                           VotingPage(),
-                          VotingPage(),
+                          ProfilePage(),
                           // LandingPage(username: "username"),
                           // LoginPage(),
                           // IdentityPage()
@@ -161,8 +162,8 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
               _toggle(true);
               break;
             case 3:
-              _heightMul = 0.8;
-              _toggle(true);
+              _heightMul = 0.38;
+              _toggle(false);
               break;
           }
           _pageController.jumpToPage(index);
