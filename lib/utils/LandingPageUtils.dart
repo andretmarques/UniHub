@@ -1,18 +1,7 @@
-import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LandingPageUtils {
-
-  Container createWelcomeCircle(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Constants.PRIMARY_COLOR
-      ),
-      width: MediaQuery.of(context).size.width - 80,
-    );
-  }
 
   Column createWelcomeString(String username) {
     return Column(
@@ -40,3 +29,4 @@ class LandingPageUtils {
     );
   }
 }
+

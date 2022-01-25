@@ -127,7 +127,7 @@ class Utils extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const IdentityPage()));
+                        builder: (context) => IdentityPage(formKey: key,)));
               });
             }
             else if (text == "CREATE") {
