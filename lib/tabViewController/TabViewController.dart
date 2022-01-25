@@ -1,5 +1,10 @@
+
+import 'dart:developer';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
@@ -16,58 +21,122 @@ class TabViewController extends StatefulWidget {
   State<TabViewController> createState() => _TabViewControllerState();
 }
 
-class _TabViewControllerState extends State<TabViewController> {
+class _TabViewControllerState extends State<TabViewController> with TickerProviderStateMixin {
 
   int _currentIndex = 0;
+  double _heightMul = 0.5;
   late PageController _pageController;
+  bool isFinalState = false;
+  late AnimationController _animcontroller;
+  late AnimationController _colorcontroller;
+  late Animation<double> _animation;
+  late ColorTween _finalTween;
+  late Animation _finalAnimation;
+  final List<Color> _colors = [Constants.MAIN_PURPLE, Constants.MAIN_PINK, Constants.MAIN_YELLOW, Constants.MAIN_BLUE];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    _animcontroller =  AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    _colorcontroller =  AnimationController(vsync: this, duration: const Duration(milliseconds: 250));
+    _finalTween = ColorTween(begin: _colors[0], end: _colors[1]);
+    _finalAnimation = _finalTween.animate(_colorcontroller)
+      ..addListener(() {
+          setState(() {});
+        });
+    _animation = CurvedAnimation(
+      parent: _animcontroller,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    );
+  }
+
+  _toggle(finalState){
+    setState(() {
+      if(finalState != isFinalState){
+        isFinalState = finalState;
+        if(!isFinalState) {
+          _animcontroller.reverse(from : 1.0);
+        } else {
+          _animcontroller.forward(from: 0.0);
+        }
+      }
+    });
+  }
+
+  changeColor(equals, next, current){
+    setState(() {
+      if (!equals){
+        _finalTween.begin = _colors[current];
+        _colorcontroller.reset();
+        _finalTween.end = _colors[next];
+        _colorcontroller.forward();
+      }
+    });
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _animcontroller.dispose();
+    _colorcontroller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height * 0.52;
 
     return Scaffold(
         body: SafeArea(
           child: Stack(
               children: <Widget>[
-                ClipPath(child:
-                Container(color: Constants.PURPLE, height: height), clipper: BezierClipper()),
-                Column(
-                    children: [
-                      Stack(
-                          children: [Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:
-                            [
-                              _buildLogos("HELP"),
-                              loadHalfLogo(),
-                              _buildLogos("BELL")],
-                          )]
-                      )]
+                SimpleShadow(
+                    child: AnimatedBuilder(
+                          animation: _animcontroller,
+                          builder: (context, anim){
+                            final double progress = _animation.value;
+                            final double height = MediaQuery.of(context).size.height;
+                            return ClipPath(
+                                child: Container(
+                                    color: _finalAnimation.value,
+                                    height: height),
+                                clipper: BezierClipper(progress, _heightMul)
+                            );
+                      },
+                    ),
+                    offset: const Offset(0, 4),
+                    opacity: 0.25,
                 ),
                 SizedBox.expand(
                     child: PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
-                        onPageChanged: (index) {setState(() => _currentIndex = index);},
+                        onPageChanged: (index) {
+                          //why set state here and on navbar??
+                          // setState(() => {
+                          //   _currentIndex = index
+                          // });
+                        },
                         children:
                         const <Widget>[
                           VotingPage(),
-                          LandingPage(username: "username"),
-                          LoginPage(),
-                          IdentityPage()
+                          VotingPage(),
+                          VotingPage(),
+                          VotingPage(),
+                          // LandingPage(username: "username"),
+                          // LoginPage(),
+                          // IdentityPage()
                         ])
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children:
+                  [
+                    _buildLogos("HELP"),
+                    loadHalfLogo(),
+                    _buildLogos("BELL"),
+                  ],
                 )
               ]),
         ),
@@ -76,7 +145,26 @@ class _TabViewControllerState extends State<TabViewController> {
         selectedIndex: _currentIndex,
         iconSize: 32,
         onItemSelected: (index) {
+          changeColor(_currentIndex == index, index, _currentIndex);
           setState(() => _currentIndex = index);
+          switch(index){
+            case 0:
+              _heightMul = 0.5;
+              _toggle(false);
+              break;
+            case 1:
+              _heightMul = 0.2;
+              _toggle(false);
+              break;
+            case 2:
+              _heightMul = 0.8;
+              _toggle(true);
+              break;
+            case 3:
+              _heightMul = 0.8;
+              _toggle(true);
+              break;
+          }
           _pageController.jumpToPage(index);
         },
         items: <CustomNavBarItem>[
@@ -135,15 +223,9 @@ class _TabViewControllerState extends State<TabViewController> {
         break;
     }
 
-    return Center(
-        child: Container(
-            height: 80,
-            alignment: Alignment.center,
-            child: IconButton(
-                icon: icon,
-                onPressed: () {}
-                )
-        )
+    return IconButton(
+        icon: icon,
+        onPressed: () {_toggle(!isFinalState);}
     );
   }
 }
