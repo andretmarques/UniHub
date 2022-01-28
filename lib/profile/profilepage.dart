@@ -44,9 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildButtonContainer(String type) {
-    var wallet = const Icon(Icons.account_balance_wallet, size: 60, color: constants.LOGO_GREY,);
-    var shopping = const Icon(Icons.shopping_basket, size: 60, color: constants.LOGO_GREY,);
-    var statistics = const Icon(Icons.leaderboard, size: 60, color: constants.LOGO_GREY,);
+    var wallet = const Icon(Icons.account_balance_wallet_outlined, size: 60, color: constants.LOGO_GREY,);
+    var shopping = const Icon(Icons.shopping_basket_outlined, size: 60, color: constants.LOGO_GREY,);
+    var statistics = const Icon(Icons.leaderboard_outlined, size: 60, color: constants.LOGO_GREY,);
     var tasks = const Icon(Icons.sticky_note_2_outlined, size: 60, color: constants.LOGO_GREY,);
 
     var icon;
