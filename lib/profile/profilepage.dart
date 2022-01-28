@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
 
 
@@ -12,7 +11,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  var halfLogoUtils = HalfLogoUtils();
 
   @override
   Widget build(BuildContext context) {
