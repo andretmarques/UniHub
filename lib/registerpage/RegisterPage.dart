@@ -30,15 +30,12 @@ class _RegisterPageState extends State<RegisterPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  child: Image.asset(Constants.HALF_LOGO, scale: 1.5)),
+              Image.asset(Constants.HALF_LOGO, scale: 1.5),
               _buildBlueTextLabel('Create Account'),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               utils.buildTextLabel('Create new account'),
               const Padding(padding: EdgeInsets.only(bottom: 20.0)),
               FormBuilder(
-                //TODO perguntar qual preferem key ou auto
-                //autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: _registerForm,
                   child: Column(
                       children: [
