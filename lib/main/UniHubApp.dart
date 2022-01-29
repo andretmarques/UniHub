@@ -11,10 +11,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:unihub/tabViewController/TabViewController.dart';
 
 class UniHubApp extends StatelessWidget {
-
-
-  // TODO get username
-  static const username = "username";
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
