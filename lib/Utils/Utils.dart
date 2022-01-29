@@ -127,8 +127,32 @@ class Utils extends StatelessWidget {
               });
             }
             else if (text == "CREATE") {
-              addCCAndTeacher(formData!["cc"], isTeacher);
-              Navigator.popAndPushNamed(context, '/LandingPage');
+
+              String cc = formData!["cc"]?.replaceAll(' ', '');
+
+              final ref = FirebaseDatabase.instance.ref();
+              Query query = ref.child("users").orderByChild("cc").equalTo(cc);
+
+              Future<DataSnapshot> event = query.get();
+
+              event.then((value) {
+                if(value.value != null){
+                  key.currentState?.invalidateField(name: 'cc', errorText: "CC already used");
+                  return;
+                }
+
+                Future<String?> ret = addCCAndTeacher(formData["cc"], isTeacher);
+                ret.then((value) {
+                  if(value != null){
+                    key.currentState?.invalidateField(name: 'cc', errorText: value);
+                    return;
+                  }
+
+                  Navigator.popAndPushNamed(context, '/LandingPage');
+                  return;
+                });
+              });
+
             }
           }
         },
@@ -276,9 +300,6 @@ class Utils extends StatelessWidget {
       secondDigit = !secondDigit;
     }
     if((sum % 10) == 0){
-      final ref = FirebaseDatabase.instance.ref();
-      Query query = ref.child("users").orderByChild("cc").equalTo(cc);
-      //todo query
       return null;
     }
     return "Invalid CC";
