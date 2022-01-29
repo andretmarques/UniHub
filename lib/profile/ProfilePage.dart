@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
 
 
@@ -17,7 +19,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
         backgroundColor: Colors.transparent,
-        body: Column(
+        body: Stack(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Padding(padding: EdgeInsets.only(bottom: 150)),
+                buildLogOut(context)
+              ],),
+                const Padding(padding: EdgeInsets.only(right: 15))
+            ],),
+          Column(
             children: [
               Row(
                   children: [
@@ -40,6 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
             mainAxisAlignment: MainAxisAlignment.end,
           ),
+        ],)
     );
   }
 
@@ -97,6 +112,32 @@ class _ProfilePageState extends State<ProfilePage> {
               )
           ),
         )
+    );
+  }
+
+  Widget buildLogOut(BuildContext context) {
+    var logOutIcon = const Icon(Icons.exit_to_app_outlined, size: 20, color: Colors.white);
+
+    return InkWell(
+          onTap: () {
+            FirebaseAuth.instance.signOut();
+            Navigator.popAndPushNamed(context, "/LoginPage");
+          },
+          child: Ink(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    logOutIcon,
+                    const Padding(padding: EdgeInsets.only(right: 5)),
+                    Text("log out", style: GoogleFonts.roboto(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                    ))
+                  ]
+              )
+          ),
     );
   }
 }

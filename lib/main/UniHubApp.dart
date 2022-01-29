@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:unihub/login/LoginPage.dart';
 import 'package:unihub/landingpage/LandingPage.dart';
 import 'package:unihub/login/SilentLogin.dart';
+import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/signin/google/SignInPage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:unihub/tabViewController/TabViewController.dart';
@@ -58,7 +59,8 @@ class UniHubApp extends StatelessWidget {
         routes: {
            '/LandingPage': (context) => const LandingPage(username: username),
            '/LoginPage': (context) => const LoginPage(),
-           '/HomePage': (context) => const TabViewController()
+           '/HomePage': (context) => const TabViewController(),
+           '/IdentityPage': (context) => const IdentityPage()
         },
 
       )
