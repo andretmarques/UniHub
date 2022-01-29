@@ -93,8 +93,6 @@ class Utils extends StatelessWidget {
         onPressed: () {
           if(key.currentState!.saveAndValidate()){
             final formData = key.currentState?.value;
-            
-            //TODO change from hardcoded buttons
             if (text == "LOGIN") {
               Future<String?> ret = signInEmail(formData!["email"], formData["pass"]);
               ret.then((value) {
@@ -105,7 +103,7 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'pass', errorText: 'Wrong password');
                   return;
                 }
-                //TODO entrar na Landing Page
+                Navigator.popAndPushNamed(context, '/HomePage');
               });
 
             } else if (text == "NEXT") {
@@ -114,7 +112,7 @@ class Utils extends StatelessWidget {
                 key.currentState?.invalidateField(name: 'pass2', errorText: 'Passwords must match');
                 return;
               }
-              Future<String?> ret = signUpEmail(formData["email"], formData["pass"], formData["user"] , formData["cc"]);
+              Future<String?> ret = signUpEmail(formData["email"], formData["pass"], formData["user"]);
 
               ret.then((value) {
                 if (value == 'weak-password') {
@@ -127,11 +125,12 @@ class Utils extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const IdentityPage()));
+                        builder: (context) => IdentityPage(formKey: key,)));
               });
             }
             else if (text == "CREATE") {
-              //TODO entrar na Landing Page
+              addCC(formData!["cc"]);
+              Navigator.popAndPushNamed(context, '/HomePage');
             }
           }
         },
@@ -194,6 +193,7 @@ class Utils extends StatelessWidget {
           email: email,
           password: password
       );
+
       return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -201,7 +201,7 @@ class Utils extends StatelessWidget {
     }
   }
 
-  Future<String?> signUpEmail(email, password, name, cc) async {
+  Future<String?> signUpEmail(email, password, name) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
@@ -210,9 +210,22 @@ class Utils extends StatelessWidget {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       ref.child(uid!).set({
-        "cc": cc,
         "isTeacher": false,
         "tokens": 999,
+      });
+      return null;
+    } on FirebaseAuthException catch (e) {
+      log(e.code);
+      return e.code;
+    }
+  }
+
+  Future<String?> addCC(cc) async {
+    try {
+      final ref = FirebaseDatabase.instance.ref("users");
+      String? uid = FirebaseAuth.instance.currentUser?.uid;
+      ref.child(uid!).set({
+        "cc": cc
       });
       return null;
     } on FirebaseAuthException catch (e) {
