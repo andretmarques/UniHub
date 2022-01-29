@@ -1,25 +1,22 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unihub/tabViewController/TabViewController.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/utils/LandingPageUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key , required this.username}) : super(key: key);
-  final String username;
+  const LandingPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: no_logic_in_create_state
-  State<StatefulWidget> createState() => _LandingWelcomePageState(username: username);
+  State<StatefulWidget> createState() => _LandingWelcomePageState();
 }
 
 
 class _LandingWelcomePageState extends State<LandingPage> {
-  _LandingWelcomePageState ({Key? key , required this.username});
-  final String username;
+  final String username = FirebaseAuth.instance.currentUser?.displayName ?? ".|.";
   bool isBigCircle = false;
   bool firstPage = true;
 
@@ -74,10 +71,9 @@ class _LandingWelcomePageState extends State<LandingPage> {
                       style: ElevatedButton.styleFrom(
                           fixedSize: const Size(151, 56), primary: Colors.white),
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.popAndPushNamed(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const TabViewController()));
+                           "/HomePage");
                       },
                       child: Text("Got it!", style: GoogleFonts.roboto(
                         fontSize: 18,

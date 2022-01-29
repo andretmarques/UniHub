@@ -15,8 +15,7 @@ class SilentLogin extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(),);
           } else if (snapshot.hasData) {
-            String user = (snapshot.data as User).displayName ?? "Error";
-            return LandingPage(username: user);
+            return const LandingPage();
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something Went wrong!"),);
           } else {
