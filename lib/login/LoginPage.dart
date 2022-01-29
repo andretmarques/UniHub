@@ -53,8 +53,10 @@ class _LoginPageState extends State<LoginPage> {
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
               utils.buildTextLabel("LOGIN WITH:"),
               Row(children:
-                [_buildLogos(AssetType.Facebook),
-                _buildLogos(AssetType.Google)],
+                [
+                  _buildLogos(AssetType.Facebook, context),
+                  _buildLogos(AssetType.Google, context)
+                ],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center
               )
@@ -63,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildLogos(AssetType type) {
+  Widget _buildLogos(AssetType type, BuildContext context) {
     var fbIcon = 'assets/images/facebook.svg';
 
     var googleIcon = 'assets/images/google.svg';
@@ -78,7 +80,10 @@ class _LoginPageState extends State<LoginPage> {
           ),
           onPressed: () {
             final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-            provider.googleLogin();
+            provider.googleLogin().then((value) {
+                Navigator.popAndPushNamed(context, '/SilentLogin');
+            });
+
           }
       ),
     );

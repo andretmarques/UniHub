@@ -101,8 +101,13 @@ class Utils extends StatelessWidget {
                 } else if (value == 'wrong-password') {
                   key.currentState?.invalidateField(name: 'pass', errorText: 'Wrong password');
                   return;
+                } else if (value == 'no-cc'){
+                  Navigator.popAndPushNamed(context, '/IdentityPage');
+                  return;
+                } else if(value == null){
+                  Navigator.popAndPushNamed(context, '/LandingPage');
+                  return;
                 }
-                Navigator.popAndPushNamed(context, '/LandingPage');
               });
 
             } else if (text == "NEXT") {
@@ -121,9 +126,7 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'email', errorText: 'Email already in use');
                   return;
                 }
-                Navigator.popAndPushNamed(
-                    context,
-                    "/IdentityPage");
+                Navigator.popAndPushNamed(context, "/IdentityPage");
               });
             }
             else if (text == "CREATE") {
@@ -215,8 +218,14 @@ class Utils extends StatelessWidget {
           email: email,
           password: password
       );
-
-      return null;
+      var uid = FirebaseAuth.instance.currentUser?.uid;
+      final query = FirebaseDatabase.instance.ref().child("users").orderByKey().equalTo(uid);
+      DataSnapshot event = await query.get();
+      if(event.child(uid!).child("cc").value == null){
+        return "no-cc";
+      } else {
+        return null;
+      }
     } on FirebaseAuthException catch (e) {
       log(e.code);
       return e.code;
@@ -229,11 +238,6 @@ class Utils extends StatelessWidget {
           email: email,
           password: password );
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-      final ref = FirebaseDatabase.instance.ref("users");
-      String? uid = FirebaseAuth.instance.currentUser?.uid;
-      ref.child(uid!).set({
-        "tokens": 999,
-      });
       return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -245,9 +249,10 @@ class Utils extends StatelessWidget {
     try {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
-      ref.child(uid!).update({
+      ref.child(uid!).set({
         "cc": cc?.replaceAll(' ', ''),
-        "isTeacher": isTeacher
+        "isTeacher": isTeacher,
+        "tokens": 0,
       });
       return null;
     } on FirebaseAuthException catch (e) {
