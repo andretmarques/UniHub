@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   child:utils.buildTextButtonLabel("Forgot Password?", context, 3),
                   alignment: Alignment.centerRight),
               const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-              utils.buildButton("LOGIN", _loginForm, context),
+              utils.buildButton("LOGIN", _loginForm, context, false),
               Row( children:
                   [utils.buildTextLabel("Don't have an account?"),
                   utils.buildTextButtonLabel('Create a new account', context, 2)],

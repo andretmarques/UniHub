@@ -5,13 +5,11 @@ import 'package:unihub/utils/Utils.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
 
 class IdentityPage extends StatefulWidget {
-  const IdentityPage({Key? key, required this.formKey}) : super(key: key);
-  final GlobalKey<FormBuilderState> formKey;
-
+  const IdentityPage({Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State<IdentityPage> createState() => _IdentityPageState(formKey: formKey);
+  State<IdentityPage> createState() => _IdentityPageState();
 }
 
 class Tech
@@ -22,8 +20,8 @@ class Tech
 }
 
 class _IdentityPageState extends State<IdentityPage> {
-  _IdentityPageState ({Key? key , required this.formKey});
-  final GlobalKey<FormBuilderState> formKey;
+  _IdentityPageState ({Key? key });
+  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   static const utils = Utils();
 
@@ -36,6 +34,7 @@ class _IdentityPageState extends State<IdentityPage> {
 
   @override
   Widget build(BuildContext context) {
+    var chips = _buildIsTeacherForm();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -60,9 +59,9 @@ class _IdentityPageState extends State<IdentityPage> {
                         const Padding(padding: EdgeInsets.only(bottom: 10.0)),
                         Wrap(spacing: 6,
                               direction: Axis.horizontal,
-                              children: _buildIsTeacherFrom()),
+                              children: chips.chips),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-                        utils.buildButton("CREATE", formKey, context),
+                        utils.buildButton("CREATE", formKey, context, chips.isTeacher),
                       ])
               ),
             ]),
@@ -79,7 +78,7 @@ class _IdentityPageState extends State<IdentityPage> {
   }
 
 
-  List<Widget> _buildIsTeacherFrom () {
+  FormatResult _buildIsTeacherForm () {
     List<Widget> chips = [];
     for (int i=0; i< _chipsList.length; i++) {
       Widget item = Padding(
@@ -103,7 +102,13 @@ class _IdentityPageState extends State<IdentityPage> {
       );
       chips.add(item);
     }
-    return chips;
+    return FormatResult(chips, selectedIndex == 0);
   }
+}
+
+class FormatResult {
+  List<Widget> chips;
+  bool isTeacher;
+  FormatResult(this.chips, this.isTeacher);
 }
 

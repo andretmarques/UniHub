@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
-import 'package:unihub/registerpage/IdentityPage.dart';
 import 'package:unihub/registerpage/RegisterPage.dart';
 import 'dart:developer';
 
@@ -83,7 +82,7 @@ class Utils extends StatelessWidget {
     );
   }
 
-  Widget buildButton(String text, GlobalKey<FormBuilderState> key, BuildContext context) {
+  Widget buildButton(String text, GlobalKey<FormBuilderState> key, BuildContext context, bool isTeacher) {
     final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: const Size(275, 56), primary: Constants.PRIMARY_COLOR);
 
     return Center (
@@ -122,14 +121,13 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'email', errorText: 'Email already in use');
                   return;
                 }
-                Navigator.push(
+                Navigator.popAndPushNamed(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => IdentityPage(formKey: key,)));
+                    "/IdentityPage");
               });
             }
             else if (text == "CREATE") {
-              addCC(formData!["cc"]);
+              addCCAndTeacher(formData!["cc"], isTeacher);
               Navigator.popAndPushNamed(context, '/HomePage');
             }
           }
@@ -210,7 +208,6 @@ class Utils extends StatelessWidget {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       ref.child(uid!).set({
-        "isTeacher": false,
         "tokens": 999,
       });
       return null;
@@ -220,12 +217,13 @@ class Utils extends StatelessWidget {
     }
   }
 
-  Future<String?> addCC(cc) async {
+  Future<String?> addCCAndTeacher(String? cc, isTeacher) async {
     try {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
-      ref.child(uid!).set({
-        "cc": cc
+      ref.child(uid!).update({
+        "cc": cc?.replaceAll(' ', ''),
+        "isTeacher": isTeacher
       });
       return null;
     } on FirebaseAuthException catch (e) {

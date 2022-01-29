@@ -44,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         utils.buildInput(FormInputType.Password),
                         utils.buildInput(FormInputType.ConfirmPassword),
                         const Padding(padding: EdgeInsets.only(bottom: 50.0)),
-                        utils.buildButton("NEXT", _registerForm, context),
+                        utils.buildButton("NEXT", _registerForm, context, false),
                   ])
               ),
               Row(
