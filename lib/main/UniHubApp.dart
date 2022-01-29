@@ -57,7 +57,7 @@ class UniHubApp extends StatelessWidget {
         ),
         //initialRoute: '/LandingPage',
         routes: {
-           '/LandingPage': (context) => const LandingPage(username: username),
+           '/LandingPage': (context) => const LandingPage(),
            '/LoginPage': (context) => const LoginPage(),
            '/HomePage': (context) => const TabViewController(),
            '/IdentityPage': (context) => const IdentityPage()

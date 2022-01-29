@@ -102,7 +102,7 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'pass', errorText: 'Wrong password');
                   return;
                 }
-                Navigator.popAndPushNamed(context, '/HomePage');
+                Navigator.popAndPushNamed(context, '/LandingPage');
               });
 
             } else if (text == "NEXT") {
@@ -128,7 +128,7 @@ class Utils extends StatelessWidget {
             }
             else if (text == "CREATE") {
               addCCAndTeacher(formData!["cc"], isTeacher);
-              Navigator.popAndPushNamed(context, '/HomePage');
+              Navigator.popAndPushNamed(context, '/LandingPage');
             }
           }
         },

@@ -8,7 +8,6 @@ class IdentityPage extends StatefulWidget {
   const IdentityPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: no_logic_in_create_state
   State<IdentityPage> createState() => _IdentityPageState();
 }
 
@@ -20,7 +19,6 @@ class Tech
 }
 
 class _IdentityPageState extends State<IdentityPage> {
-  _IdentityPageState ({Key? key });
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   static const utils = Utils();
