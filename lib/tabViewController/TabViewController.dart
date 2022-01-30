@@ -149,7 +149,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
               _toggle(true);
               break;
             case 3:
-              _heightMul = 0.38;
+              _heightMul = 0.4;
               _toggle(false);
               break;
           }
