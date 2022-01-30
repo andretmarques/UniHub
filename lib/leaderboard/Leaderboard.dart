@@ -23,7 +23,10 @@ class LeaderboardState extends State<LeaderboardList> {
         child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 100)),
-                _getMessageList()
+              _getMessageList(),
+              if (top3) ...[
+                const Padding(padding: EdgeInsets.only(bottom: 100)),
+              ]
             ]
         ),
       ),
@@ -36,7 +39,11 @@ class LeaderboardState extends State<LeaderboardList> {
       FirebaseAnimatedList(
         controller: _scrollController,
         query: widget.userDao.getUserQuery(),
-        reverse: true,
+        sort: (a, b) {
+            var ai = a.child("tasksDone").value as int;
+            var bi = b.child("tasksDone").value as int;
+            return bi - ai;
+        },
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final user = User.fromJson(json);
@@ -102,14 +109,14 @@ class LeaderboardState extends State<LeaderboardList> {
                             style: GoogleFonts.roboto(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black
+                                color: const Color.fromRGBO(90, 90, 90, 1)
                             )
                         ),
                         Text(tasks.toString() + " Tasks Done",
                             style: GoogleFonts.roboto(
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal,
-                                color: Colors.black
+                                color: const Color.fromRGBO(90, 90, 90, 1)
                             )
                         ),
                       ],
