@@ -253,6 +253,7 @@ class Utils extends StatelessWidget {
         "cc": cc?.replaceAll(' ', ''),
         "isTeacher": isTeacher,
         "tokens": 0,
+        "tasksDone": 0,
       });
       return null;
     } on FirebaseAuthException catch (e) {
