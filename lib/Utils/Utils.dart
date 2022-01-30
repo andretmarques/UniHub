@@ -256,7 +256,7 @@ class Utils extends StatelessWidget {
         "tokens": 0,
         "tasksDone": 0,
         "image": "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png",
-        "displayName": displayName,
+        "userName": displayName,
       });
       return null;
     } on FirebaseAuthException catch (e) {
