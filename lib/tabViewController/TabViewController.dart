@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:unihub/faq/FaqPage.dart';
 import 'package:unihub/constants/Constants.dart' as Constants;
+import 'package:unihub/leaderboard/Leaderboard.dart';
 import 'package:unihub/profile/ProfilePage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
 import 'package:unihub/votingPage/VotingPage.dart';
@@ -110,11 +111,11 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         onPageChanged: (index) {
                         },
                         children:
-                        const <Widget>[
-                          VotingPage(),
-                          VotingPage(),
-                          VotingPage(),
-                          ProfilePage(),
+                        [
+                          const VotingPage(),
+                          const VotingPage(),
+                          LeaderboardList(),
+                          const ProfilePage(),
                         ])
                 ),
                 Row(
