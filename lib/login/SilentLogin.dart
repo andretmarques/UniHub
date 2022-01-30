@@ -17,7 +17,6 @@ class SilentLogin extends StatelessWidget {
         future: silentLogin(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            log(snapshot.data.toString());
               if(snapshot.data == "no-cc"){
                 return const IdentityPage();
               } else {
