@@ -66,9 +66,10 @@ class CustomNavBar extends StatelessWidget {
         color: bgColor,
         boxShadow: [
           if (showElevation)
-            const BoxShadow(
-              color: Colors.black12,
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
               blurRadius: 2,
+              offset: const Offset(0, -3)
             ),
         ],
       ),

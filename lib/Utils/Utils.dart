@@ -101,8 +101,13 @@ class Utils extends StatelessWidget {
                 } else if (value == 'wrong-password') {
                   key.currentState?.invalidateField(name: 'pass', errorText: 'Wrong password');
                   return;
+                } else if (value == 'no-cc'){
+                  Navigator.popAndPushNamed(context, '/IdentityPage');
+                  return;
+                } else if(value == null){
+                  Navigator.popAndPushNamed(context, '/LandingPage');
+                  return;
                 }
-                Navigator.popAndPushNamed(context, '/LandingPage');
               });
 
             } else if (text == "NEXT") {
@@ -121,14 +126,36 @@ class Utils extends StatelessWidget {
                   key.currentState?.invalidateField(name: 'email', errorText: 'Email already in use');
                   return;
                 }
-                Navigator.popAndPushNamed(
-                    context,
-                    "/IdentityPage");
+                Navigator.popAndPushNamed(context, "/IdentityPage");
               });
             }
             else if (text == "CREATE") {
-              addCCAndTeacher(formData!["cc"], isTeacher);
-              Navigator.popAndPushNamed(context, '/LandingPage');
+
+              String cc = formData!["cc"]?.replaceAll(' ', '');
+
+              final ref = FirebaseDatabase.instance.ref();
+              Query query = ref.child("users").orderByChild("cc").equalTo(cc);
+
+              Future<DataSnapshot> event = query.get();
+
+              event.then((value) {
+                if(value.value != null){
+                  key.currentState?.invalidateField(name: 'cc', errorText: "CC already used");
+                  return;
+                }
+
+                Future<String?> ret = addCCAndTeacher(formData["cc"], isTeacher);
+                ret.then((value) {
+                  if(value != null){
+                    key.currentState?.invalidateField(name: 'cc', errorText: value);
+                    return;
+                  }
+
+                  Navigator.popAndPushNamed(context, '/LandingPage');
+                  return;
+                });
+              });
+
             }
           }
         },
@@ -191,8 +218,14 @@ class Utils extends StatelessWidget {
           email: email,
           password: password
       );
-
-      return null;
+      var uid = FirebaseAuth.instance.currentUser?.uid;
+      final query = FirebaseDatabase.instance.ref().child("users").orderByKey().equalTo(uid);
+      DataSnapshot event = await query.get();
+      if(event.child(uid!).child("cc").value == null){
+        return "no-cc";
+      } else {
+        return null;
+      }
     } on FirebaseAuthException catch (e) {
       log(e.code);
       return e.code;
@@ -205,11 +238,6 @@ class Utils extends StatelessWidget {
           email: email,
           password: password );
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-      final ref = FirebaseDatabase.instance.ref("users");
-      String? uid = FirebaseAuth.instance.currentUser?.uid;
-      ref.child(uid!).set({
-        "tokens": 999,
-      });
       return null;
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -221,9 +249,14 @@ class Utils extends StatelessWidget {
     try {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
-      ref.child(uid!).update({
+      String? displayName = FirebaseAuth.instance.currentUser?.displayName;
+      ref.child(uid!).set({
         "cc": cc?.replaceAll(' ', ''),
-        "isTeacher": isTeacher
+        "isTeacher": isTeacher,
+        "tokens": 0,
+        "tasksDone": 0,
+        "image": "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png",
+        "displayName": displayName,
       });
       return null;
     } on FirebaseAuthException catch (e) {
@@ -276,9 +309,6 @@ class Utils extends StatelessWidget {
       secondDigit = !secondDigit;
     }
     if((sum % 10) == 0){
-      final ref = FirebaseDatabase.instance.ref();
-      Query query = ref.child("users").orderByChild("cc").equalTo(cc);
-      //todo query
       return null;
     }
     return "Invalid CC";
