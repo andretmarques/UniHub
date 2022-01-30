@@ -6,6 +6,7 @@ import 'package:unihub/constants/Constants.dart' as Constants;
 import 'package:unihub/leaderboard/Leaderboard.dart';
 import 'package:unihub/profile/ProfilePage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
+import 'package:unihub/tasksList/TaskList.dart';
 import 'package:unihub/votingPage/VotingPage.dart';
 
 import 'BazeierClipper.dart';
@@ -111,10 +112,10 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         onPageChanged: null,
                         children:
                         [
-                          const VotingPage(),
-                          const VotingPage(),
+                          VotingPage(),
+                          TaskList(),
                           LeaderboardList(),
-                          const ProfilePage(),
+                          ProfilePage(),
                         ])
                 ),
                 Row(
