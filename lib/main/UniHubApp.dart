@@ -11,7 +11,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:unihub/tabViewController/TabViewController.dart';
 
 class UniHubApp extends StatelessWidget {
-
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
@@ -57,7 +56,9 @@ class UniHubApp extends StatelessWidget {
            '/LandingPage': (context) => const LandingPage(),
            '/LoginPage': (context) => const LoginPage(),
            '/HomePage': (context) => const TabViewController(),
-           '/IdentityPage': (context) => const IdentityPage()
+           '/IdentityPage': (context) => const IdentityPage(),
+           '/SilentLogin': (context) => const SilentLogin(),
+
         },
 
       )
