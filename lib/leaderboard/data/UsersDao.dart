@@ -12,7 +12,7 @@ class UserDao {
   }
 
   Query getUserQuery() {
-    return _usersRef.orderByChild("tasksDone");
+    return _usersRef.orderByChild("tasksDone").limitToLast(10);
   }
   
 }

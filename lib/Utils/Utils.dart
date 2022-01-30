@@ -249,11 +249,14 @@ class Utils extends StatelessWidget {
     try {
       final ref = FirebaseDatabase.instance.ref("users");
       String? uid = FirebaseAuth.instance.currentUser?.uid;
+      String? displayName = FirebaseAuth.instance.currentUser?.displayName;
       ref.child(uid!).set({
         "cc": cc?.replaceAll(' ', ''),
         "isTeacher": isTeacher,
         "tokens": 0,
         "tasksDone": 0,
+        "image": "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png",
+        "displayName": displayName,
       });
       return null;
     } on FirebaseAuthException catch (e) {

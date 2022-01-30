@@ -108,8 +108,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                     child: PageView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: _pageController,
-                        onPageChanged: (index) {
-                        },
+                        onPageChanged: null,
                         children:
                         [
                           const VotingPage(),
