@@ -113,8 +113,8 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         children:
                         [
                           VotingPage(),
-                          VotingPage(),
                           TaskList(),
+                          VotingPage(),
                           ProfilePage(),
                         ])
                 ),

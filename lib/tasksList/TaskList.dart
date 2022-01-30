@@ -14,26 +14,27 @@ class TaskListState extends State<TaskList> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.only(top: 100)),
-            _getMessageList(),
+            const Padding(padding: EdgeInsets.only(top: 200)),
+            _getTaskList(),
           ]
         ),
       ),
     );
   }
 
-  Widget _getMessageList() {
+  Widget _getTaskList() {
     return Expanded(
       child: FirebaseAnimatedList(
+        reverse: true,
         controller: _scrollController,
-        query: widget.messageDao.getTaskQuery(),
+        query: widget.taskDao.getTaskQuery(),
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
-          final message = Task.fromJson(json);
-          return TaskWidget(message.text);
+          final task = Task.fromJson(json);
+          return TaskWidget(task.text, task.state);
         },
       ),
     );
@@ -49,7 +50,7 @@ class TaskListState extends State<TaskList> {
 class TaskList extends StatefulWidget {
   TaskList({Key? key}) : super(key: key);
 
-  final messageDao = TaskDao();
+  final taskDao = TaskDao();
 
   @override
   TaskListState createState() => TaskListState();

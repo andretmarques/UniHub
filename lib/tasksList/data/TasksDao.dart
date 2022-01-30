@@ -10,6 +10,6 @@ class TaskDao {
   }
 
   Query getTaskQuery() {
-    return _tasksRef;
+    return _tasksRef.limitToFirst(10);
   }
 }
