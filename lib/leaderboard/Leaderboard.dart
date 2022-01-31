@@ -12,7 +12,6 @@ class LeaderboardState extends State<LeaderboardList> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -54,12 +53,6 @@ class LeaderboardState extends State<LeaderboardList> {
         },
       ),
     );
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    }
   }
 
   Container top3Container(name, image, tasks,double index){

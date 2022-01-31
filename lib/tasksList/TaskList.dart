@@ -9,7 +9,6 @@ class TaskListState extends State<TaskList> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -28,7 +27,6 @@ class TaskListState extends State<TaskList> {
   Widget _getTaskList() {
     return Expanded(
       child: FirebaseAnimatedList(
-        reverse: true,
         controller: _scrollController,
         query: widget.taskDao.getTaskQuery(),
         itemBuilder: (context, snapshot, animation, index) {
@@ -38,12 +36,6 @@ class TaskListState extends State<TaskList> {
         },
       ),
     );
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    }
   }
 }
 

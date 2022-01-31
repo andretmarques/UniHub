@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
@@ -12,108 +9,101 @@ import 'package:unihub/userData/User.dart' as my;
 
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key, required this.user, required this.updateUser}) : super(key: key);
+  final my.User user;
+  final BoolCallback updateUser;
 
   @override
-  State<StatefulWidget> createState() => _ProfilePageState();
+  State<StatefulWidget> createState() => _ProfilePageState(user: user, updateUser: updateUser);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
+  _ProfilePageState ({Key? key , required this.user, required this.updateUser});
+  my.User user;
+  final BoolCallback updateUser;
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         backgroundColor: Colors.transparent,
-        body: FutureBuilder(
-          future: getLoggedUser(),
-          builder: (context, snapshot) {
-            my.User user = my.User("", 0, "", false);
-            if (snapshot.hasData){
-              user = (snapshot.data) as my.User;
-            }
-            return Stack(
+        body: Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(bottom: 120)),
+                    buildEditProfile(context, updateUser),
+                    const Padding(padding: EdgeInsets.only(bottom: 5)),
+                    buildLogOut(context),
+                  ],
+                ),
+                const Padding(padding: EdgeInsets.only(right: 15))
+              ],
+            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 25)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(padding: EdgeInsets.only(bottom: 90)),
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(user.image),
+                          radius: 38,
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(bottom: 5)),
+                      Text(user.name,
+                        style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),
+                      ),
+                      Text(user.isTeacher ? "IST Teacher" : "IST Student",
+                        style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Padding(padding: EdgeInsets.only(bottom: 120)),
-                        buildEditProfile(context),
-                        const Padding(padding: EdgeInsets.only(bottom: 5)),
-                        buildLogOut(context),
-                      ],
-                    ),
-                    const Padding(padding: EdgeInsets.only(right: 15))
-                  ],
+                    children: [
+                      buildButtonContainer("WALLET"),
+                      const Padding(padding: EdgeInsets.only(right: 25.0)),
+                      buildButtonContainer("SHOPPING")
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center
                 ),
-                if (snapshot.hasData) ...[
+                const Padding(padding: EdgeInsets.only(bottom: 20.0)),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Padding(padding: EdgeInsets.only(left: 25)),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(padding: EdgeInsets.only(bottom: 90)),
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(user.image),
-                            radius: 38,
-                          ),
-                        ),
-                        const Padding(padding: EdgeInsets.only(bottom: 5)),
-                        Text(user.name,
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
-                          ),
-                        ),
-                        Text(user.isTeacher ? "IST Teacher" : "IST Student",
-                          style: GoogleFonts.roboto(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    children: [
+                      buildButtonContainer("STATISTICS"),
+                      const Padding(padding: EdgeInsets.only(right: 25.0)),
+                      buildButtonContainer("TASKS")
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center
                 ),
-                ],
-                Column(
-                  children: [
-                    Row(
-                        children: [
-                          buildButtonContainer("WALLET"),
-                          const Padding(padding: EdgeInsets.only(right: 25.0)),
-                          buildButtonContainer("SHOPPING")
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center
-                    ),
-                    const Padding(padding: EdgeInsets.only(bottom: 20.0)),
-                    Row(
-                        children: [
-                          buildButtonContainer("STATISTICS"),
-                          const Padding(padding: EdgeInsets.only(right: 25.0)),
-                          buildButtonContainer("TASKS")
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center
-                    ),
-                    const Padding(padding: EdgeInsets.only(bottom: 30.0))
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.end,
-                ),
-              ],);
-
-          },
+                const Padding(padding: EdgeInsets.only(bottom: 30.0))
+              ],
+              mainAxisAlignment: MainAxisAlignment.end,
+            ),
+          ],
         )
     );
   }
@@ -175,20 +165,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<my.User?> getLoggedUser() async {
-    String? uid = FirebaseAuth.instance.currentUser?.uid;
-    final query = FirebaseDatabase.instance.ref().child('users').orderByKey().equalTo(uid);
-    try {
-      DataSnapshot snapshot = await query.get();
-      final json = snapshot.value as Map<dynamic, dynamic>;
-      final user = my.User.fromJson(json[uid]);
-      return user;
-    } on FirebaseAuthException catch (e) {
-      log(e.code);
-      return null;
-    }
-  }
-
   Widget buildLogOut(BuildContext context) {
     var logOutIcon = const Icon(Icons.exit_to_app_outlined, size: 20, color: Colors.white);
 
@@ -218,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildEditProfile(BuildContext context) {
+  Widget buildEditProfile(BuildContext context, VoidCallback updateUser) {
     var editLogo = const Icon(Icons.edit_outlined, size: 20, color: constants.MAIN_BLUE);
 
     return TextButton(
@@ -252,8 +228,16 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(
-                builder: (context) => const EditProfilePage()));
+                builder: (context) => EditProfilePage(updateUser: updateProfilePage)));
       },
     );
   }
+
+  void updateProfilePage(){
+    updateUser().then((value) {
+        setState(() { user = value!; });
+    });
+  }
+
 }
+typedef BoolCallback = Future<my.User?> Function();

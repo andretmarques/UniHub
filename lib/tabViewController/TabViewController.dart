@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -7,6 +9,7 @@ import 'package:unihub/leaderboard/Leaderboard.dart';
 import 'package:unihub/profile/ProfilePage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
 import 'package:unihub/tasksList/TaskList.dart';
+import 'package:unihub/userData/User.dart' as my;
 import 'package:unihub/votingPage/VotingPage.dart';
 
 import 'BazeierClipper.dart';
@@ -30,6 +33,8 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
   late ColorTween _finalTween;
   late Animation _finalAnimation;
   final List<Color> _colors = [Constants.MAIN_PURPLE, Constants.MAIN_PINK, Constants.MAIN_YELLOW, Constants.MAIN_BLUE];
+  late my.User? user;
+
 
   @override
   void initState() {
@@ -47,6 +52,11 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
       curve: Curves.easeOut,
       reverseCurve: Curves.easeIn,
     );
+    getLoggedUser().then((value){
+      setState(() {
+        user = value;
+      });
+    });
   }
 
   _toggle(finalState){
@@ -115,7 +125,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           VotingPage(),
                           TaskList(),
                           LeaderboardList(),
-                          ProfilePage(),
+                          ProfilePage(user: user as my.User,updateUser: updateUser),
                         ])
                 ),
                 Row(
@@ -224,5 +234,26 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
           }
         }
     );
+  }
+
+  Future<my.User?> getLoggedUser() async {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    final query = FirebaseDatabase.instance.ref().child('users').orderByKey().equalTo(uid);
+    try {
+      DataSnapshot snapshot = await query.get();
+      final json = snapshot.value as Map<dynamic, dynamic>;
+      final user = my.User.fromJson(json[uid]);
+      return user;
+    } on FirebaseAuthException {
+      return null;
+    }
+  }
+
+  Future<my.User?> updateUser() async {
+    var value = await getLoggedUser();
+    setState(() {
+        user = value;
+    });
+    return user;
   }
 }

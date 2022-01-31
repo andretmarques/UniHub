@@ -15,13 +15,16 @@ import 'package:unihub/constants/Constants.dart' as constants;
 
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({Key? key, required this.updateUser}) : super(key: key);
+  final VoidCallback updateUser;
 
   @override
-  State<StatefulWidget> createState() => _EditProfilePageState();
+  State<StatefulWidget> createState() => _EditProfilePageState(updateUser: updateUser);
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  _EditProfilePageState ({Key? key , required this.updateUser});
+  final VoidCallback updateUser;
   var halfLogoUtils = HalfLogoUtils();
 
   @override
@@ -38,7 +41,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(icon: const Icon(Icons.arrow_back, size: 50, color: Colors.black,), onPressed: () {Navigator.pop(context);}),
+                      IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            size: 50,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            updateUser();
+                            Navigator.pop(context);
+                          }
+                      ),
                       halfLogoUtils.loadHalfLogo(Alignment.center),
                       const SizedBox(width: 50.0),
                     ],
