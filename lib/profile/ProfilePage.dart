@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
+import 'package:unihub/profile/logoutConfirmation/LogoutConfimationPage.dart';
 import 'EditProfile/EditProfilePage.dart';
 import 'package:unihub/userData/User.dart' as my;
 
@@ -165,13 +166,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildLogOut(BuildContext context) {
+  Widget buildLogOut(BuildContext context, my.User user) {
     var logOutIcon = const Icon(Icons.exit_to_app_outlined, size: 20, color: Colors.white);
 
     return InkWell(
           onTap: () {
-            FirebaseAuth.instance.signOut();
-            Navigator.popAndPushNamed(context, "/LoginPage");
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (context) => const LogoutConfirmationPage(user: user)));
           },
           child: Ink(
               child: Row(
