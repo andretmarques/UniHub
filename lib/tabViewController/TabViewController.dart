@@ -127,7 +127,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                           VotingPage(),
                           TaskList(),
                           LeaderboardList(),
-                          ProfilePage(user: user as my.User,updateUser: updateUser),
+                          ProfilePage(user: user,updateUser: updateUser, toggleBackground: _toggle,),
                         ])
                 ),
                 Row(

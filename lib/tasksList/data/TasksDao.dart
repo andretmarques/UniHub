@@ -12,4 +12,8 @@ class TaskDao {
   Query getTaskQuery() {
     return _tasksRef.limitToFirst(10);
   }
+
+  Query getOwnTaskQuery(String uid) {
+    return _tasksRef.orderByChild("owner").equalTo(uid);
+  }
 }

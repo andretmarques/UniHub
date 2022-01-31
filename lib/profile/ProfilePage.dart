@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
+import 'package:unihub/profile/myTasks/MyTasksPage.dart';
+import 'package:unihub/profile/wallet/WalletPage.dart';
 import 'EditProfile/EditProfilePage.dart';
 import 'package:unihub/userData/User.dart' as my;
 
@@ -9,18 +11,20 @@ import 'package:unihub/userData/User.dart' as my;
 
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key, required this.user, required this.updateUser}) : super(key: key);
+  const ProfilePage({Key? key, required this.user, required this.updateUser, required this.toggleBackground}) : super(key: key);
   final my.User user;
   final BoolCallback updateUser;
+  final ToggleCallback toggleBackground;
 
   @override
-  State<StatefulWidget> createState() => _ProfilePageState(user: user, updateUser: updateUser);
+  State<StatefulWidget> createState() => _ProfilePageState(user: user, updateUser: updateUser, toggleBackground: toggleBackground);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  _ProfilePageState ({Key? key , required this.user, required this.updateUser});
+  _ProfilePageState ({Key? key , required this.user, required this.updateUser, required this.toggleBackground});
   my.User user;
   final BoolCallback updateUser;
+  final ToggleCallback toggleBackground;
   @override
   Widget build(BuildContext context) {
 
@@ -115,25 +119,44 @@ class _ProfilePageState extends State<ProfilePage> {
     var tasks = const Icon(Icons.sticky_note_2_outlined, size: 60, color: constants.LOGO_GREY,);
 
     var icon;
+    var function;
 
     switch (type) {
       case "WALLET":
         icon = wallet;
+        function = () {
+          toggleBackground(true);
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => WalletPage(toggleBackground: toggleBackground)));
+          return null;
+        };
         break;
       case "SHOPPING":
         icon = shopping;
+        function = () { return null; };
         break;
       case "STATISTICS":
         icon = statistics;
+        function = () { return null; };
         break;
       case "TASKS":
         icon = tasks;
+        function = () {
+          toggleBackground(true);
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => MyTasksPage(toggleBackground: toggleBackground)));
+          return null;
+        };
         break;
     }
 
     return Center(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            function();
+          },
           child: Ink(
               height: 160,
               width: 160,
@@ -241,3 +264,4 @@ class _ProfilePageState extends State<ProfilePage> {
 
 }
 typedef BoolCallback = Future<my.User?> Function();
+typedef ToggleCallback = dynamic Function(dynamic);
