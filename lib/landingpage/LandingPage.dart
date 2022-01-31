@@ -27,9 +27,9 @@ class _LandingWelcomePageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 3), () {
-      setState(() { isBigCircle = true; });
+      if (mounted) { setState(() { isBigCircle = true; }); }
       Timer(const Duration(seconds: 2), () {
-        setState(() { firstPage = false; });
+        if (mounted) { setState(() { firstPage = false; }); }
       });
     });
 

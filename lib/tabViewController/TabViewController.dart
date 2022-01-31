@@ -33,7 +33,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
   late ColorTween _finalTween;
   late Animation _finalAnimation;
   final List<Color> _colors = [Constants.MAIN_PURPLE, Constants.MAIN_PINK, Constants.MAIN_YELLOW, Constants.MAIN_BLUE];
-  late my.User? user;
+  my.User user = my.User("", 0, "", false);
 
 
   @override
@@ -53,9 +53,11 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
       reverseCurve: Curves.easeIn,
     );
     getLoggedUser().then((value){
-      setState(() {
-        user = value;
-      });
+      if(value != null){
+        setState(() {
+          user = value;
+        });
+      }
     });
   }
 
@@ -252,7 +254,9 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
   Future<my.User?> updateUser() async {
     var value = await getLoggedUser();
     setState(() {
+      if(value != null){
         user = value;
+      }
     });
     return user;
   }
