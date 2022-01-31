@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
@@ -45,7 +46,7 @@ class _LogoutConfirmationPageState extends State<LogoutConfirmationPage> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 20),
-              height: MediaQuery.of(context).size.height - 450,
+              height: MediaQuery.of(context).size.height - 350,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -67,63 +68,103 @@ class _LogoutConfirmationPageState extends State<LogoutConfirmationPage> {
                           color: const Color.fromRGBO(53, 53, 53, 1.0)
                       )
                   ),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(user.image),
-                          radius: 38,
+                  Container(
+                    padding: const EdgeInsets.only(top: 75, bottom: 75, left: 15),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            width: 1.0,
+                            color: Color.fromRGBO(170, 170, 170, 1.0)
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(right: 5)),
-                      Text(user.name,
-                        style: GoogleFonts.roboto(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundColor: constants.MAIN_BLUE,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(user.image),
+                            radius: 38,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      MaterialButton(
-                          child: Text("NO",
-                            style: GoogleFonts.roboto(
-                              fontSize: 23,
+                        const Padding(padding: EdgeInsets.only(right: 5)),
+                        Text(user.name,
+                          style: GoogleFonts.roboto(
+                              fontSize: 24,
                               fontWeight: FontWeight.normal,
-                              color: Colors.white
-                            ),
+                              color: const Color.fromRGBO(65, 65, 65, 1.0)
                           ),
-                          onPressed: (){
-                            toggleBackground(false);
-                            Navigator.pop(context);
-                          }
-                      ),
-                      MaterialButton(
-                          child: Text("YES",
-                            style: GoogleFonts.roboto(
-                                fontSize: 23,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 82,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MaterialButton(
+                            padding: const EdgeInsets.only(),
+                            child: Container(
+                              height: 82,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                      width: 1.0,
+                                      color: Colors.black
+                                  ),
+                                ),
+                              ),
+                              child: _buildButtonRow(false),
+                              width: MediaQuery.of(context).size.width/2.25,
                             ),
-                          ),
-                          onPressed: (){
-                            FirebaseAuth.instance.signOut();
-                            Navigator.popAndPushNamed(context, "/LoginPage");
-                          }
-                      ),
-                    ],
+                            onPressed: (){
+                              toggleBackground(false);
+                              Navigator.pop(context);
+                            }
+                        ),
+                        MaterialButton(
+                            padding: const EdgeInsets.only(),
+                            child: Container(
+                              height: 82,
+                              child: _buildButtonRow(true),
+                              width: MediaQuery.of(context).size.width/2.25,
+                            ),
+                            onPressed: (){
+                              FirebaseAuth.instance.signOut();
+                              Navigator.popAndPushNamed(context, "/LoginPage");
+                            }
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
             ),
           ],
         )
+    );
+  }
+
+  Row _buildButtonRow(bool y){
+    var text = y ? "YES" : "NO";
+    var svg = y ? "assets/images/yes.svg" : "assets/images/no.svg";
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(text,
+          style: GoogleFonts.roboto(
+              fontSize: 23,
+              fontWeight: FontWeight.normal,
+              color: const Color.fromRGBO(95, 89, 89, 1.0)
+          ),
+        ),
+        const SizedBox(width: 10),
+        SvgPicture.asset(svg,
+            height:20, width: 20)
+      ],
     );
   }
 

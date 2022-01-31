@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Padding(padding: EdgeInsets.only(bottom: 120)),
                     buildEditProfile(context, updateUser),
                     const Padding(padding: EdgeInsets.only(bottom: 5)),
-                    buildLogOut(context),
+                    buildLogOut(context, user),
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(right: 15))
@@ -196,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(
-                    builder: (context) => const LogoutConfirmationPage(user: user)));
+                    builder: (context) => LogoutConfirmationPage(user: user, toggleBackground: toggleBackground,)));
           },
           child: Ink(
               child: Row(
