@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
+import 'package:unihub/profile/logoutConfirmation/LogoutConfimationPage.dart';
 import 'package:unihub/profile/myTasks/MyTasksPage.dart';
 import 'package:unihub/profile/wallet/WalletPage.dart';
 import 'EditProfile/EditProfilePage.dart';
@@ -42,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Padding(padding: EdgeInsets.only(bottom: 120)),
                     buildEditProfile(context, updateUser),
                     const Padding(padding: EdgeInsets.only(bottom: 5)),
-                    buildLogOut(context),
+                    buildLogOut(context, user),
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(right: 15))
@@ -188,13 +189,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildLogOut(BuildContext context) {
+  Widget buildLogOut(BuildContext context, my.User user) {
     var logOutIcon = const Icon(Icons.exit_to_app_outlined, size: 20, color: Colors.white);
 
     return InkWell(
           onTap: () {
-            FirebaseAuth.instance.signOut();
-            Navigator.popAndPushNamed(context, "/LoginPage");
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (context) => LogoutConfirmationPage(user: user, toggleBackground: toggleBackground,)));
           },
           child: Ink(
               child: Row(
