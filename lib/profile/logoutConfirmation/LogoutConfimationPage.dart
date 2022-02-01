@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +9,7 @@ import 'package:unihub/userData/User.dart' as my;
 
 
 class LogoutConfirmationPage extends StatefulWidget {
-  LogoutConfirmationPage({Key? key, required this.user, required this.toggleBackground}) : super(key: key);
+  const LogoutConfirmationPage({Key? key, required this.user, required this.toggleBackground}) : super(key: key);
   final ToggleCallback toggleBackground;
   final my.User user;
 

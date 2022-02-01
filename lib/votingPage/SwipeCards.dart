@@ -18,14 +18,11 @@ class _SwipeCardsState extends State<SwipeCards> {
 
   List<ExampleCard> images = [];
   List<String> text = [
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
-    'assets/images/cleanRoom.jpg',
+    'assets/images/task2.jpg',
+    'assets/images/task3.jpg',
+    'assets/images/task4.jpg',
+    'assets/images/task5.jpg',
+    'assets/images/task1.jpg'
   ];
 
   @override

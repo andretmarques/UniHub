@@ -28,7 +28,7 @@ class ExampleCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(40), // Image border
           child: SizedBox.fromSize(
               child:Image.asset(image,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.fitWidth,
                   height: double.infinity,
                   width: double.infinity
               ),
