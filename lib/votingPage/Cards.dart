@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ExampleCard extends StatelessWidget {
   final String image;
@@ -10,30 +13,33 @@ class ExampleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        color: CupertinoColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.systemGrey.withOpacity(0.2),
-            spreadRadius: 3,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          )
-        ],
-      ),
-      alignment: Alignment.center,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(40), // Image border
-          child: SizedBox.fromSize(
-              child:Image.asset(image,
-                  fit: BoxFit.fitHeight,
-                  height: double.infinity,
-                  width: double.infinity
+    return InkWell(
+      onTap: () { log("tapped"); },
+      child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: CupertinoColors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: CupertinoColors.systemGrey.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                )
+              ],
+            ),
+            alignment: Alignment.center,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40), // Image border
+              child: SizedBox.fromSize(
+                child:Image.asset(image,
+                    fit: BoxFit.fitHeight,
+                    height: double.infinity,
+                    width: double.infinity
+                ),
               ),
-          ),
-      ),
+            ),
+      )
     );
   }
 }
