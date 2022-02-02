@@ -99,7 +99,7 @@ class _MyTasksPageState extends State<MyTasksPage> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [ Text(task.text, style: GoogleFonts.roboto(
+                                  children: [ Text(task.title, style: GoogleFonts.roboto(
                                       fontSize: 22,
                                       color: const Color.fromRGBO(88, 84, 84, 1)
                                   )),
