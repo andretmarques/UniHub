@@ -90,7 +90,7 @@ class TaskListState extends State<TaskList> {
           final task = Task.fromJson(json);
           var state = filterState();
           if (task.state == state || state == "all") {
-            return TaskWidget(task.text, task.state);
+            return TaskWidget(task.title, task.state);
           }
           return Container();
         },
@@ -107,4 +107,3 @@ class TaskList extends StatefulWidget {
   @override
   TaskListState createState() => TaskListState();
 }
-

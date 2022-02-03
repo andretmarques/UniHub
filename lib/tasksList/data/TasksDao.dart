@@ -10,6 +10,15 @@ class TaskDao {
   }
 
   Query getTaskQuery() {
-    return _tasksRef.limitToFirst(30);
+    return _tasksRef.limitToFirst(25);
+  }
+
+  Query getFiveTaskQuery() {
+    return _tasksRef.limitToFirst(5);
+
+  }
+
+  Query getOwnTaskQuery(String uid) {
+    return _tasksRef.orderByChild("owner").equalTo(uid);
   }
 }

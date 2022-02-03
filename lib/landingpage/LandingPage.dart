@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unihub/faq/FaqPage.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/utils/LandingPageUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
@@ -26,9 +27,9 @@ class _LandingWelcomePageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 3), () {
-      setState(() { isBigCircle = true; });
+      if (mounted) { setState(() { isBigCircle = true; }); }
       Timer(const Duration(seconds: 2), () {
-        setState(() { firstPage = false; });
+        if (mounted) { setState(() { firstPage = false; }); }
       });
     });
 
@@ -60,8 +61,15 @@ class _LandingWelcomePageState extends State<LandingPage> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.help_outline_rounded, size: 40, color: Colors.white),
+                  children: [
+                    IconButton(
+                        icon: const Icon(Icons.help_outline_rounded, size: 40, color: Colors.white),
+                        onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(
+                                    builder: (context) => const FaqPage()));
+                        }
+                    )
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 30)),

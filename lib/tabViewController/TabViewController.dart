@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -7,6 +9,7 @@ import 'package:unihub/leaderboard/Leaderboard.dart';
 import 'package:unihub/profile/ProfilePage.dart';
 import 'package:unihub/tabViewController/CustomNavBar.dart';
 import 'package:unihub/tasksList/TaskList.dart';
+import 'package:unihub/userData/User.dart' as my;
 import 'package:unihub/votingPage/VotingPage.dart';
 
 import 'BazeierClipper.dart';
@@ -19,17 +22,20 @@ class TabViewController extends StatefulWidget {
 }
 
 class _TabViewControllerState extends State<TabViewController> with TickerProviderStateMixin {
-
   int _currentIndex = 0;
+  int tasksEvaluated = 0;
   double _heightMul = 0.5;
   late PageController _pageController;
   bool isFinalState = false;
+  bool isLocked = true;
   late AnimationController _animcontroller;
   late AnimationController _colorcontroller;
   late Animation<double> _animation;
   late ColorTween _finalTween;
   late Animation _finalAnimation;
   final List<Color> _colors = [Constants.MAIN_PURPLE, Constants.MAIN_PINK, Constants.MAIN_YELLOW, Constants.MAIN_BLUE];
+  my.User user = my.User("", 0, "", false);
+
 
   @override
   void initState() {
@@ -47,6 +53,13 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
       curve: Curves.easeOut,
       reverseCurve: Curves.easeIn,
     );
+    getLoggedUser().then((value){
+      if(value != null){
+        setState(() {
+          user = value;
+        });
+      }
+    });
   }
 
   _toggle(finalState){
@@ -112,10 +125,11 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         onPageChanged: null,
                         children:
                         [
-                          VotingPage(),
+                          VotingPage(toggleBackground: _toggle, evaluateTask: evaluateTask, tasksEvaluated: tasksEvaluated,),
+                          // SwipeCards(toggleBackground: _toggle),
                           TaskList(),
                           LeaderboardList(),
-                          ProfilePage(),
+                          ProfilePage(user: user,updateUser: updateUser, toggleBackground: _toggle,),
                         ])
                 ),
                 Row(
@@ -134,27 +148,29 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
         selectedIndex: _currentIndex,
         iconSize: 32,
         onItemSelected: (index) {
-          changeColor(_currentIndex == index, index, _currentIndex);
-          setState(() => _currentIndex = index);
-          switch(index){
-            case 0:
-              _heightMul = 0.5;
-              _toggle(false);
-              break;
-            case 1:
-              _heightMul = 0.2;
-              _toggle(false);
-              break;
-            case 2:
-              _heightMul = 0.8;
-              _toggle(true);
-              break;
-            case 3:
-              _heightMul = 0.4;
-              _toggle(false);
-              break;
+          if(!isLocked){
+            changeColor(_currentIndex == index, index, _currentIndex);
+            setState(() => _currentIndex = index);
+            switch(index){
+              case 0:
+                _heightMul = 0.5;
+                _toggle(false);
+                break;
+              case 1:
+                _heightMul = 0.2;
+                _toggle(false);
+                break;
+              case 2:
+                _heightMul = 0.8;
+                _toggle(true);
+                break;
+              case 3:
+                _heightMul = 0.4;
+                _toggle(false);
+                break;
+            }
+            _pageController.jumpToPage(index);
           }
-          _pageController.jumpToPage(index);
         },
         items: <CustomNavBarItem>[
           CustomNavBarItem(
@@ -198,9 +214,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
 
   Widget _buildLogos(String type, BuildContext context) {
     var help = const Icon(Icons.help_outline_rounded, size: 40, color: Colors.white,);
-
     var bell = const Icon(Icons.notifications_none_rounded, size: 40, color: Colors.white,);
-
     var icon;
 
     switch (type) {
@@ -220,9 +234,43 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                 MaterialPageRoute(
                     builder: (context) => const FaqPage()));
           } else {
-            _toggle(!isFinalState);
+            setState(() {
+              tasksEvaluated = 0;
+            });
           }
         }
     );
+  }
+
+  Future<my.User?> getLoggedUser() async {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    final query = FirebaseDatabase.instance.ref().child('users').orderByKey().equalTo(uid);
+    try {
+      DataSnapshot snapshot = await query.get();
+      final json = snapshot.value as Map<dynamic, dynamic>;
+      final user = my.User.fromJson(json[uid]);
+      return user;
+    } on FirebaseAuthException {
+      return null;
+    }
+  }
+
+  void evaluateTask(){
+    tasksEvaluated++;
+    if (tasksEvaluated == 5){
+      setState(() {
+        isLocked = false;
+      });
+    }
+  }
+
+  Future<my.User?> updateUser() async {
+    var value = await getLoggedUser();
+    setState(() {
+      if(value != null){
+        user = value;
+      }
+    });
+    return user;
   }
 }
