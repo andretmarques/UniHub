@@ -22,8 +22,8 @@ class TabViewController extends StatefulWidget {
 }
 
 class _TabViewControllerState extends State<TabViewController> with TickerProviderStateMixin {
-
   int _currentIndex = 0;
+  int tasksEvaluated = 0;
   double _heightMul = 0.5;
   late PageController _pageController;
   bool isFinalState = false;
@@ -124,7 +124,8 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         onPageChanged: null,
                         children:
                         [
-                          VotingPage(),
+                          VotingPage(toggleBackground: _toggle, evaluateTask: evaluateTask, tasksEvaluated: tasksEvaluated,),
+                          // SwipeCards(toggleBackground: _toggle),
                           TaskList(),
                           LeaderboardList(),
                           ProfilePage(user: user,updateUser: updateUser, toggleBackground: _toggle,),
@@ -232,7 +233,9 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                 MaterialPageRoute(
                     builder: (context) => const FaqPage()));
           } else {
-            _toggle(!isFinalState);
+            setState(() {
+              tasksEvaluated = 0;
+            });
           }
         }
     );
@@ -249,6 +252,10 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
     } on FirebaseAuthException {
       return null;
     }
+  }
+
+  void evaluateTask(){
+    tasksEvaluated++;
   }
 
   Future<my.User?> updateUser() async {

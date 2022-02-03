@@ -32,7 +32,7 @@ class TaskListState extends State<TaskList> {
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final task = Task.fromJson(json);
-          return TaskWidget(task.text, task.state);
+          return TaskWidget(task.title, task.state);
         },
       ),
     );
