@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
 import 'package:unihub/profile/logoutConfirmation/LogoutConfimationPage.dart';
 import 'package:unihub/profile/myTasks/MyTasksPage.dart';
+import 'package:unihub/profile/shopping/ShoppingPage.dart';
 import 'package:unihub/profile/wallet/WalletPage.dart';
 import 'EditProfile/EditProfilePage.dart';
 import 'package:unihub/userData/User.dart' as my;
@@ -135,7 +135,13 @@ class _ProfilePageState extends State<ProfilePage> {
         break;
       case "SHOPPING":
         icon = shopping;
-        function = () { return null; };
+        function = () {
+          toggleBackground(true);
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => ShoppingPage(toggleBackground: toggleBackground)));
+          return null;
+        };
         break;
       case "STATISTICS":
         icon = statistics;
