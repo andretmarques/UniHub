@@ -1,13 +1,11 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'TaskWidget.dart';
 import 'package:flutter/material.dart';
 import 'data/Task.dart';
 import 'data/TasksDao.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
-import 'dropDownTest.dart';
+import 'FilterDropDown.dart';
 
 class Item {
   const Item(this.name,this.icon);
@@ -16,19 +14,20 @@ class Item {
 }
 
   List tasksDropDown = [
+    Item('All Tasks',Container()),
     Item('Done',Container(
         padding: const EdgeInsets.only(right: 15),
         child:SvgPicture.asset('assets/images/done.svg',
             height:22,
             width: 22
         ))),
-    Item('inProgress',Container(
+    Item('In Progress',Container(
         padding: const EdgeInsets.only(right: 15),
         child:SvgPicture.asset('assets/images/inProgress.svg',
             height:22,
             width: 22
         ))),
-    Item('ToDo',Container(
+    Item('To Do',Container(
         padding: const EdgeInsets.only(right: 15),
         child:SvgPicture.asset('assets/images/toDo.svg',
             height:22,
@@ -38,7 +37,23 @@ class Item {
 
 class TaskListState extends State<TaskList> {
   final ScrollController _scrollController = ScrollController();
-  var dropdownValue = "All Tasks";
+  var currentIndex = 0;
+
+  filterState() {
+    switch (currentIndex) {
+      case 0:
+        return "all";
+      case 1:
+        return "done";
+      case 2:
+        return "inProgress";
+      case 3:
+        return "toDo";
+      default:
+        return null;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +63,16 @@ class TaskListState extends State<TaskList> {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Column(
             children: [
-              const Padding(padding: EdgeInsets.only(top: 200)),
-              SimpleAccountMenu(
+              const Padding(padding: EdgeInsets.only(top: 160)),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [FilterDropDown(
                 icons: tasksDropDown,
                 onChange: (index) {
-                  print(index);
-                }, borderRadius: BorderRadius.zero, key: const Key("1"),
-              ),
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+              ),const SizedBox(width: 50,)]),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               _getTaskList(),
             ]
         ),
@@ -65,13 +83,16 @@ class TaskListState extends State<TaskList> {
   Widget _getTaskList() {
     return Expanded(
       child: FirebaseAnimatedList(
-        reverse: true,
         controller: _scrollController,
         query: widget.taskDao.getTaskQuery(),
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final task = Task.fromJson(json);
-          return TaskWidget(task.text, task.state);
+          var state = filterState();
+          if (task.state == state || state == "all") {
+            return TaskWidget(task.text, task.state);
+          }
+          return Container();
         },
       ),
     );
