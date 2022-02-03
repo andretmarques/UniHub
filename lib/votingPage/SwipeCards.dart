@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tcard/tcard.dart';
 
 
@@ -35,12 +36,16 @@ class _SwipeCardsState extends State<SwipeCards> {
   final int startingTask;
   double heightMul = 0.52;
   bool show = true;
+  bool ended = false;
   List<Task> tasksToEvaluate = [];
 
   late List<StatelessCard> cards;
   @override
   void initState() {
-    show = startingTask < 5;
+    if(startingTask >= 5){
+      show = false;
+      ended = true;
+    }
     cards = [StatelessCard(task: Task("", "", "https://media.istockphoto.com/vectors/loading-icon-vector-id695717992?k=20&m=695717992&s=170667a&w=0&h=-CJPOSDqhQK4i5D0ZPYf4DiSwF3OBhWiWtH8R7NBsm4=", "", "", "", "", 0), toggleBackground: toggleBack, opened: false,)];
     _loadCards();
     super.initState();
@@ -54,7 +59,7 @@ class _SwipeCardsState extends State<SwipeCards> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (show) ...[
+          if (show || !ended) ...[
             SizedBox(
               height: MediaQuery.of(context).size.height * heightMul,
               child: TCard(
@@ -65,26 +70,52 @@ class _SwipeCardsState extends State<SwipeCards> {
                   onSwipe(info, index);
                 },
                 onEnd: () {
-                  //Todo on end logic
-                  log('end');
+                  setState(() {
+                    ended = true;
+                    show = false;
+                  });
                 },
               ),
             ),
+            Row(
+                children: [
+                  if(!opened) ...[
+                    _buildLogos("CROSS", controller),
+                    _buildLogos("LOVE", controller)
+                  ]
+                ],
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround)
           ] else ... [
-            SizedBox(
+            Container(
+              margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(248, 248, 248, 1.0),
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: const Color.fromRGBO(220, 220, 220, 1.0),
+                ),
+              ),
               height: MediaQuery.of(context).size.height * heightMul,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("All the needed tasks were evaluated!",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                          fontSize: 26,
+                          fontWeight: FontWeight.normal,
+                          color: const Color.fromRGBO(104, 102, 102, 1.0)
+                      )
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+                  const Icon(Icons.thumb_up_outlined, size: 50, color: Color.fromRGBO(104, 102, 102, 1.0))
+                ],
+              )
             ),
           ],
-          Row(
-              children: [
-                if(!opened) ...[
-                  _buildLogos("CROSS", controller),
-                  _buildLogos("LOVE", controller)
-                ]
-              ],
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround)
-              ]
+        ]
       ),
     );
   }
