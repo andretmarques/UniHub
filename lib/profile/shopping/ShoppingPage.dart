@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:unihub/profile/shopping/BuyConfirmationPage.dart';
 import 'package:unihub/profile/wallet/transactions/TransactionsDao.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
@@ -102,9 +103,9 @@ class _ShoppingPageState extends State<ShoppingPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  _buildContainer("College Tuition", 50),
-                  _buildContainer("Mental health clinic discount", 20),
-                  _buildContainer("Cafeteria IST", 5),
+                  _buildContainer("College Tuition", 50, context),
+                  _buildContainer("Mental health clinic discount", 20, context),
+                  _buildContainer("Cafeteria IST", 5, context),
                   const SizedBox(height: 25),
                 ],
               ),
@@ -114,9 +115,13 @@ class _ShoppingPageState extends State<ShoppingPage> {
     );
   }
 
-  InkWell _buildContainer(String desc, int price){
+  InkWell _buildContainer(String desc, int price, BuildContext context){
     return InkWell(
-      onTap: () {applyTransaction(desc, price); },
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context) => BuyConfirmationPage(desc: desc, price: price.toString(), changeTokens: changeTokens,)));
+      },
       child: Container(
         margin: const EdgeInsets.only(left: 6, right: 6),
           decoration: const BoxDecoration(
@@ -156,26 +161,12 @@ class _ShoppingPageState extends State<ShoppingPage> {
     );
   }
 
-  Future<void> applyTransaction(String desc, int price) async {
-    final DatabaseReference _usersRef = FirebaseDatabase.instance.ref().child('users');
-    final DatabaseReference _transRef = FirebaseDatabase.instance.ref().child('transactions');
-    var now = DateTime.now();
-    var formatter = DateFormat('dd/MM/yyyy');
-    String formattedDate = formatter.format(now);
-    String? uid = FirebaseAuth.instance.currentUser?.uid;
+  int changeTokens(int price){
     int t = int.parse(tokens) - price;
     setState(() {
       tokens = t.toString();
     });
-    _usersRef.child(uid!).update({
-        "tokens": t,
-    });
-    _transRef.push().set({
-      "date": formattedDate,
-      "owner": uid,
-      "title": desc,
-      "value": price,
-    });
+    return t;
   }
 
   Future<int> _getTokens() async {
