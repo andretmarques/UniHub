@@ -15,6 +15,7 @@ class TaskDao {
 
   Query getFiveTaskQuery() {
     return _tasksRef.limitToFirst(5);
+
   }
 
   Query getOwnTaskQuery(String uid) {

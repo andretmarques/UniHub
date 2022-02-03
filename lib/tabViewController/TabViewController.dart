@@ -27,6 +27,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
   double _heightMul = 0.5;
   late PageController _pageController;
   bool isFinalState = false;
+  bool isLocked = true;
   late AnimationController _animcontroller;
   late AnimationController _colorcontroller;
   late Animation<double> _animation;
@@ -147,27 +148,29 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
         selectedIndex: _currentIndex,
         iconSize: 32,
         onItemSelected: (index) {
-          changeColor(_currentIndex == index, index, _currentIndex);
-          setState(() => _currentIndex = index);
-          switch(index){
-            case 0:
-              _heightMul = 0.5;
-              _toggle(false);
-              break;
-            case 1:
-              _heightMul = 0.2;
-              _toggle(false);
-              break;
-            case 2:
-              _heightMul = 0.8;
-              _toggle(true);
-              break;
-            case 3:
-              _heightMul = 0.4;
-              _toggle(false);
-              break;
+          if(!isLocked){
+            changeColor(_currentIndex == index, index, _currentIndex);
+            setState(() => _currentIndex = index);
+            switch(index){
+              case 0:
+                _heightMul = 0.5;
+                _toggle(false);
+                break;
+              case 1:
+                _heightMul = 0.2;
+                _toggle(false);
+                break;
+              case 2:
+                _heightMul = 0.8;
+                _toggle(true);
+                break;
+              case 3:
+                _heightMul = 0.4;
+                _toggle(false);
+                break;
+            }
+            _pageController.jumpToPage(index);
           }
-          _pageController.jumpToPage(index);
         },
         items: <CustomNavBarItem>[
           CustomNavBarItem(
@@ -211,9 +214,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
 
   Widget _buildLogos(String type, BuildContext context) {
     var help = const Icon(Icons.help_outline_rounded, size: 40, color: Colors.white,);
-
     var bell = const Icon(Icons.notifications_none_rounded, size: 40, color: Colors.white,);
-
     var icon;
 
     switch (type) {
@@ -256,6 +257,11 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
 
   void evaluateTask(){
     tasksEvaluated++;
+    if (tasksEvaluated == 5){
+      setState(() {
+        isLocked = false;
+      });
+    }
   }
 
   Future<my.User?> updateUser() async {
