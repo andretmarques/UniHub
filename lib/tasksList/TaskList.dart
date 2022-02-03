@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'TaskWidget.dart';
 import 'package:flutter/material.dart';
 import 'data/Task.dart';
@@ -71,7 +72,7 @@ class TaskListState extends State<TaskList> {
                     currentIndex = index;
                   });
                 },
-              ),const SizedBox(width: 50,)]),
+              ),buildAddTask(context)]),
               const Padding(padding: EdgeInsets.only(top: 20)),
               _getTaskList(),
             ]
@@ -97,6 +98,41 @@ class TaskListState extends State<TaskList> {
       ),
     );
   }
+}
+
+Widget buildAddTask(BuildContext context) {
+  var addTaskLogo = const Icon(Icons.add_box_outlined, size: 20, color: Color.fromRGBO(88, 84, 84, 1));
+
+  return TextButton(
+    style: ButtonStyle(
+        elevation: MaterialStateProperty.all<double>(4),
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.only(left: 10, right: 10)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: const BorderSide(
+                  color: Colors.grey)
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        addTaskLogo,
+        const Padding(padding: EdgeInsets.only(right: 5)),
+        Text("Add Task",
+          style: GoogleFonts.roboto(
+              fontSize: 17,
+              color: const Color.fromRGBO(88, 84, 84, 1)
+          ),
+        ),
+      ],
+    ),
+    onPressed: () {
+    },
+  );
 }
 
 class TaskList extends StatefulWidget {
