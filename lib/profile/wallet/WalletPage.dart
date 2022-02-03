@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:unihub/profile/wallet/transactions/TransactionsDao.dart';
 import 'package:unihub/utils/HalfLogoUtils.dart';
 import 'package:unihub/constants/Constants.dart' as constants;
@@ -125,6 +126,11 @@ class _WalletPageState extends State<WalletPage> {
     return Expanded(
       child: FirebaseAnimatedList(
         query: widget.transactionDao.getOwnTransactionsQuery(uid!),
+        sort: (a, b) {
+          DateTime ai = DateFormat("dd/MM/yyyy").parse(a.child("date").value as String);
+          DateTime bi = DateFormat("dd/MM/yyyy").parse(b.child("date").value as String);
+          return bi.compareTo(ai);
+        },
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final task = my.Transaction.fromJson(json);
