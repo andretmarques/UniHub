@@ -127,7 +127,7 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                         [
                           VotingPage(toggleBackground: _toggle, evaluateTask: evaluateTask, tasksEvaluated: tasksEvaluated,),
                           // SwipeCards(toggleBackground: _toggle),
-                          TaskList(),
+                          TaskList(toggleBackground: _toggle),
                           LeaderboardList(),
                           ProfilePage(user: user,updateUser: updateUser, toggleBackground: _toggle,),
                         ])

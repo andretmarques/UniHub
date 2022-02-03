@@ -11,11 +11,11 @@ class IdentityPage extends StatefulWidget {
   State<IdentityPage> createState() => _IdentityPageState();
 }
 
-class Tech
+class Role
 {
   String label;
   Color color;
-  Tech(this.label, this.color);
+  Role(this.label, this.color);
 }
 
 class _IdentityPageState extends State<IdentityPage> {
@@ -24,9 +24,9 @@ class _IdentityPageState extends State<IdentityPage> {
   static const utils = Utils();
 
   int selectedIndex = 0;
-  final List<Tech> _chipsList = [
-    Tech("Teacher", Colors.green),
-    Tech("Student", Colors.blueGrey)
+  final List<Role> _chipsList = [
+    Role("Teacher", Colors.green),
+    Role("Student", Colors.blueGrey)
     ];
 
 

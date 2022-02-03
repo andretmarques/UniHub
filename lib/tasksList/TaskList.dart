@@ -1,5 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unihub/tasksList/CreateTaskPage.dart';
 import 'TaskWidget.dart';
 import 'package:flutter/material.dart';
 import 'data/Task.dart';
@@ -37,7 +38,9 @@ class Item {
   ];
 
 class TaskListState extends State<TaskList> {
+  TaskListState ({Key? key, required this.toggleBackground});
   final ScrollController _scrollController = ScrollController();
+  final ToggleCallback toggleBackground;
   var currentIndex = 0;
 
   filterState() {
@@ -98,48 +101,54 @@ class TaskListState extends State<TaskList> {
       ),
     );
   }
+
+  Widget buildAddTask(BuildContext context) {
+    var addTaskLogo = const Icon(Icons.add_box_outlined, size: 20, color: Color.fromRGBO(88, 84, 84, 1));
+
+    return TextButton(
+      style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(4),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.only(left: 10, right: 10)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: const BorderSide(
+                    color: Colors.grey)
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          addTaskLogo,
+          const Padding(padding: EdgeInsets.only(right: 5)),
+          Text("Add Task",
+            style: GoogleFonts.roboto(
+                fontSize: 17,
+                color: const Color.fromRGBO(88, 84, 84, 1)
+            ),
+          ),
+        ],
+      ),
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context) => CreateTaskPage(toggleBackground: toggleBackground)));
+      },
+    );
+  }
 }
 
-Widget buildAddTask(BuildContext context) {
-  var addTaskLogo = const Icon(Icons.add_box_outlined, size: 20, color: Color.fromRGBO(88, 84, 84, 1));
 
-  return TextButton(
-    style: ButtonStyle(
-        elevation: MaterialStateProperty.all<double>(4),
-        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.only(left: 10, right: 10)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: const BorderSide(
-                  color: Colors.grey)
-          ),
-        ),
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        addTaskLogo,
-        const Padding(padding: EdgeInsets.only(right: 5)),
-        Text("Add Task",
-          style: GoogleFonts.roboto(
-              fontSize: 17,
-              color: const Color.fromRGBO(88, 84, 84, 1)
-          ),
-        ),
-      ],
-    ),
-    onPressed: () {
-    },
-  );
-}
 
 class TaskList extends StatefulWidget {
-  TaskList({Key? key}) : super(key: key);
+  TaskList({Key? key, required this.toggleBackground}) : super(key: key);
+  final ToggleCallback toggleBackground;
 
   final taskDao = TaskDao();
 
   @override
-  TaskListState createState() => TaskListState();
+  TaskListState createState() => TaskListState(toggleBackground: toggleBackground);
 }
