@@ -20,8 +20,8 @@ class ContractLinking extends ChangeNotifier {
   late Credentials _credentials;
 
   late DeployedContract _contract;
-  late ContractFunction _countryName;
-  late ContractFunction _currentPopulation;
+  late ContractFunction _user;
+  late ContractFunction _tokens;
   late ContractFunction _set;
   late ContractFunction _decrement;
   late ContractFunction _increment;
@@ -64,8 +64,8 @@ class ContractLinking extends ChangeNotifier {
         ContractAbi.fromJson(_abiCode, "Achandos"), _contractAddress);
 
     // Extracting the functions, declared in contract.
-    _countryName = _contract.function("user");
-    _currentPopulation = _contract.function("tokens");
+    _user = _contract.function("user");
+    _tokens = _contract.function("tokens");
     _set = _contract.function("set");
     _decrement = _contract.function("decrement");
     _increment = _contract.function("increment");
@@ -77,9 +77,9 @@ class ContractLinking extends ChangeNotifier {
 
     // Getting the current name and population declared in the smart contract.
     List name = await _client
-        .call(contract: _contract, function: _countryName, params: []);
+        .call(contract: _contract, function: _user, params: []);
     List population = await _client
-        .call(contract: _contract, function: _currentPopulation, params: []);
+        .call(contract: _contract, function: _tokens, params: []);
     user = name[0];
     tokens = population[0].toString();
     print("$user , $tokens");
