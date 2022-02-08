@@ -2,7 +2,7 @@
 
 A new way of paying University fees.
 
-If you have android try here -> [Download](https://www.mediafire.com/file/pz974pxuxa5xxmt/Unihub.apk/file)
+If you have android try here -> [Download](https://www.mediafire.com/file/7p1wwnok0wo2xsa/Unihub.apk/file)
 
 ![image](https://user-images.githubusercontent.com/55790466/149672372-7358d242-b798-4273-bb92-22bb499f49a6.png)
 
