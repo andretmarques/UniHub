@@ -43,6 +43,7 @@ class _FilterDropDownState extends State<FilterDropDown>
     if(isMenuOpen){
       closeMenu();
     }
+
     _animationController.dispose();
     super.dispose();
   }
