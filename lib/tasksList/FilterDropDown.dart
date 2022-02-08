@@ -40,7 +40,9 @@ class _FilterDropDownState extends State<FilterDropDown>
 
   @override
   void dispose() {
-    closeMenu();
+    if(isMenuOpen){
+      closeMenu();
+    }
     _animationController.dispose();
     super.dispose();
   }

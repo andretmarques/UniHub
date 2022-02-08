@@ -234,9 +234,6 @@ class _TabViewControllerState extends State<TabViewController> with TickerProvid
                 MaterialPageRoute(
                     builder: (context) => const FaqPage()));
           } else {
-            setState(() {
-              tasksEvaluated = 0;
-            });
           }
         }
     );
